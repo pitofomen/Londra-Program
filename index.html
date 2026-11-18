@@ -7,1021 +7,794 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="Londra">
-<meta name="theme-color" content="#0f1522">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link id="webfonts" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <style>
-/* Yerleşim: tek kolon, kalkış panosu hissi veren koyu başlık + gün gün zaman çizelgesi; saatler Londra saati, yanında TR karşılığı */
+/* Yerleşim: iOS dili — büyük başlık, gruplanmış listeler, alt sekme çubuğu, alttan açılan detay paneli. Tek vurgu rengi: sistem mavisi. */
 :root {
-  --paper: #f2f3f6;
-  --surface: #ffffff;
-  --ink: #111827;
-  --muted: #5a6273;
-  --line: #dce0e7;
-  --soft: #eceff4;
-  --accent: #c8102e;
-  --accent-ink: #ffffff;
-  --brass: #94702f;
-  --board: #0f1522;
-  --board-ink: #f3f4f7;
-  --board-muted: #9aa4b8;
-  --river: #b9d1e6;
-  --park: #d3e4cc;
-  --warn-bg: #fff3d6;
-  --warn-ink: #6b4a00;
-  --bad-bg: #fde3e6;
-  --bad-ink: #8a0f22;
-  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
-  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --bg: #f2f2f7;
+  --card: #ffffff;
+  --label: #000000;
+  --label2: rgba(60, 60, 67, .6);
+  --label3: rgba(60, 60, 67, .3);
+  --sep: rgba(60, 60, 67, .22);
+  --fill: rgba(118, 118, 128, .12);
+  --accent: #007aff;
+  --accent-tint: rgba(0, 122, 255, .12);
+  --red: #ff3b30;
+  --orange: #ff9500;
+  --land: #f5f2eb;
+  --water: #c7dff2;
+  --park: #d5eacb;
+  --bar: rgba(249, 249, 249, .94);
+  --seg-on: #ffffff;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter Display", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0c1017; --surface: #141a24; --ink: #e7eaf0; --muted: #9ba4b5; --line: #262f3e; --soft: #1a2130;
-    --accent: #ff5468; --accent-ink: #1c0308; --brass: #d7b273; --board: #070a10; --board-ink: #eef0f4; --board-muted: #8e98ac;
-    --river: #1d3850; --park: #1c3123; --warn-bg: #3a2e10; --warn-ink: #f3d68e; --bad-bg: #3d1219; --bad-ink: #ffb3bd;
+    --bg: #000000; --card: #1c1c1e; --label: #ffffff; --label2: rgba(235, 235, 245, .6); --label3: rgba(235, 235, 245, .3);
+    --sep: rgba(84, 84, 88, .65); --fill: rgba(118, 118, 128, .24); --accent: #0a84ff; --accent-tint: rgba(10, 132, 255, .18);
+    --red: #ff453a; --orange: #ff9f0a; --land: #26262a; --water: #1c3448; --park: #1e3323; --bar: rgba(22, 22, 24, .92); --seg-on: #636366;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0c1017; --surface: #141a24; --ink: #e7eaf0; --muted: #9ba4b5; --line: #262f3e; --soft: #1a2130;
-  --accent: #ff5468; --accent-ink: #1c0308; --brass: #d7b273; --board: #070a10; --board-ink: #eef0f4; --board-muted: #8e98ac;
-  --river: #1d3850; --park: #1c3123; --warn-bg: #3a2e10; --warn-ink: #f3d68e; --bad-bg: #3d1219; --bad-ink: #ffb3bd;
+  --bg: #000000; --card: #1c1c1e; --label: #ffffff; --label2: rgba(235, 235, 245, .6); --label3: rgba(235, 235, 245, .3);
+  --sep: rgba(84, 84, 88, .65); --fill: rgba(118, 118, 128, .24); --accent: #0a84ff; --accent-tint: rgba(10, 132, 255, .18);
+  --red: #ff453a; --orange: #ff9f0a; --land: #26262a; --water: #1c3448; --park: #1e3323; --bar: rgba(22, 22, 24, .92); --seg-on: #636366;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body {
-  margin: 0; background: var(--paper); color: var(--ink);
-  font: 400 15.5px/1.55 var(--f-body);
-}
-a { color: inherit; }
-.wrap { max-width: 780px; margin: 0 auto; padding: 0 16px 48px; }
-h1, h2, h3 { text-wrap: balance; margin: 0; }
-.mono, .t, .clock b, .cmp td.v { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+html { -webkit-text-size-adjust: 100%; height: 100%; }
+body { margin: 0; min-height: 100%; background: var(--bg); color: var(--label); font: 400 17px/1.35 var(--font); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-align: inherit; }
+a { color: var(--accent); text-decoration: none; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { text-wrap: balance; }
+.num { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+svg.i { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+svg.chev { width: 8px; height: 13px; fill: none; stroke: var(--label3); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 
-/* ---------- Başlık panosu ---------- */
-.board {
-  background: var(--board); color: var(--board-ink);
-  border-radius: 0 0 18px 18px; padding: 22px 20px 20px;
-  display: grid; gap: 18px;
-}
-.eyebrow { font: 600 12px/1 var(--f-display); letter-spacing: .16em; text-transform: uppercase; color: var(--board-muted); }
-.route { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-.route h1 { font: 700 clamp(30px, 7vw, 44px)/1.05 var(--f-display); letter-spacing: -.01em; }
-.route h1 .arrow { color: var(--accent); padding: 0 .12em; }
-.route .dates { font: 500 15px/1.3 var(--f-mono); color: var(--board-muted); }
-.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #ffffff1a; border-radius: 12px; overflow: hidden; }
-.fact { background: var(--board); padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
-.fact .k { font: 600 11px/1 var(--f-display); letter-spacing: .14em; text-transform: uppercase; color: var(--board-muted); }
-.fact .v { font: 600 15px/1.3 var(--f-body); }
-.fact .s { font-size: 13px; color: var(--board-muted); line-height: 1.4; }
-.live { display: flex; gap: 10px; flex-wrap: wrap; align-items: stretch; }
-.clock { border: 1px solid #ffffff22; border-radius: 10px; padding: 8px 12px; display: grid; gap: 2px; min-width: 112px; }
-.clock span { font: 600 11px/1 var(--f-display); letter-spacing: .14em; text-transform: uppercase; color: var(--board-muted); }
-.clock b { font-size: 22px; font-weight: 500; letter-spacing: .02em; }
-.next { flex: 1 1 260px; border-radius: 10px; padding: 10px 14px; background: var(--accent); color: var(--accent-ink); display: grid; gap: 2px; align-content: center; }
-.next .k { font: 600 11px/1 var(--f-display); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
-.next .v { font: 600 18px/1.25 var(--f-body); }
-.next .s { font: 500 13px/1.3 var(--f-mono); opacity: .9; }
+/* ---------- Ekranlar ---------- */
+.app { max-width: 600px; margin: 0 auto; padding: 14px 16px calc(100px + env(safe-area-inset-bottom)); }
+.view[hidden] { display: none; }
+.view { animation: fade .2s ease-out; }
+@keyframes fade { from { opacity: .4; } to { opacity: 1; } }
+.lt { padding: 18px 4px 14px; }
+.lt h1 { font: 700 34px/1.12 var(--font-display); letter-spacing: -.01em; }
+.lt p { margin-top: 3px; font-size: 15px; color: var(--label2); }
 
-/* ---------- Dönüş seçimi ---------- */
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
-.choose { margin-top: 18px; display: grid; gap: 12px; }
-.choose-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.sec-title { font: 700 13px/1 var(--f-display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.seg button {
-  font: inherit; color: var(--ink); background: var(--soft); border: 1.5px solid transparent; border-radius: 10px;
-  padding: 10px 12px; text-align: left; cursor: pointer; display: grid; gap: 2px;
-}
-.seg button .n { font: 600 11px/1 var(--f-display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.seg button .d { font: 600 15px/1.3 var(--f-body); }
-.seg button .a { font-size: 12.5px; color: var(--muted); }
-.seg button[aria-pressed="true"] { border-color: var(--accent); background: var(--surface); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent); }
-.seg button:focus-visible, .btn:focus-visible, .chips a:focus-visible, input:focus-visible, .mk:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.cmp { width: 100%; border-collapse: collapse; font-size: 14px; }
-.cmp th, .cmp td { text-align: left; padding: 7px 8px; border-top: 1px solid var(--line); vertical-align: top; }
-.cmp th { font-weight: 500; color: var(--muted); width: 28%; }
-.cmp td.v { font-size: 13.5px; }
-.cmp thead th { border-top: 0; font: 600 11px/1.2 var(--f-display); letter-spacing: .12em; text-transform: uppercase; }
-.cmp td.sel, .cmp th.sel { background: color-mix(in srgb, var(--accent) 7%, transparent); }
-.table-scroll { overflow-x: auto; }
+/* ---------- Gruplar ---------- */
+.group { background: var(--card); border-radius: 12px; overflow: hidden; }
+.sec-h { margin: 26px 16px 7px; font-size: 13px; line-height: 1.3; letter-spacing: .01em; text-transform: uppercase; color: var(--label2); font-weight: 400; }
+.foot { margin: 8px 16px 0; font-size: 13px; line-height: 1.4; color: var(--label2); }
+.row { position: relative; display: flex; align-items: center; gap: 12px; width: 100%; min-height: 48px; padding: 11px 16px; }
+.row + .row::before { content: ""; position: absolute; top: 0; right: 0; left: var(--inset, 16px); border-top: .5px solid var(--sep); }
+button.row:active, a.row:active, label.row:active { background: var(--fill); }
+.row-t { flex: 1; min-width: 0; }
+.row-t b { display: block; font-weight: 400; color: var(--label); }
+.row-t span { display: block; font-size: 15px; color: var(--label2); margin-top: 1px; }
+.row-v { color: var(--label2); text-align: right; font-size: 17px; }
+.row .ico { color: var(--accent); display: grid; place-items: center; }
 
-/* ---------- Gün sekmeleri ---------- */
-.chips { position: sticky; top: 0; z-index: 5; background: var(--paper); padding: 12px 0 10px; margin-top: 10px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; align-items: stretch; }
-.chips::-webkit-scrollbar { display: none; }
-.tab {
-  flex: none; position: relative; cursor: pointer; text-align: left; color: var(--ink);
-  display: grid; grid-template-columns: auto auto; column-gap: 7px; align-items: center;
-  border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 7px 12px 7px 10px;
-  font: 500 13.5px/1.2 var(--f-body);
-}
-.tab b { grid-row: span 2; font: 600 19px/1 var(--f-mono); font-variant-numeric: tabular-nums; }
-.tab span { font-weight: 600; }
-.tab small { grid-column: 2; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
-.tab:hover { border-color: var(--ink); }
-.tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
-.tab[aria-selected="true"] small { color: inherit; opacity: .72; }
-.tab.is-today::after { content: ""; position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
-.tab-util { display: flex; align-items: center; padding: 7px 12px; }
-.tab-sep { flex: none; width: 1px; background: var(--line); margin: 4px 2px; }
-.tab:focus-visible, .next:focus-visible, .daynav button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.next { font: inherit; border: 0; text-align: left; cursor: pointer; }
-.next:hover { filter: brightness(1.06); }
-.next .s::after { content: "  · programı aç →"; opacity: .8; }
+/* ---------- Sıradaki kartı ---------- */
+.next { width: 100%; display: flex; align-items: center; gap: 12px; background: var(--accent); color: #fff; border-radius: 14px; padding: 14px 16px; text-align: left; }
+.next > span { flex: 1; display: grid; gap: 2px; }
+.next .k { font-size: 13px; font-weight: 600; opacity: .85; }
+.next .v { font: 700 21px/1.2 var(--font-display); }
+.next .s { font-size: 15px; opacity: .9; }
+.next svg.chev { stroke: rgba(255, 255, 255, .7); }
 
-/* Sekme panelleri: ekranda yalnızca seçili olan görünür */
-@media screen {
-  .tabpanel:not(.is-active) { display: none; }
-  .tabpanel.is-active { animation: panelIn .22s ease-out; }
-}
-@keyframes panelIn { from { opacity: .35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { .tabpanel.is-active { animation: none; } }
-.daynav { display: flex; justify-content: space-between; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
-.daynav button { font: 500 14px/1.25 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; cursor: pointer; display: grid; gap: 2px; text-align: left; max-width: 48%; }
-.daynav button.nx { margin-left: auto; text-align: right; }
-.daynav button small { font: 600 10.5px/1 var(--f-display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-.daynav button:hover { border-color: var(--ink); }
-.ev.flash .ev-body { animation: flash 1.6s ease-out; border-radius: 10px; }
-@keyframes flash { 0%, 35% { background: color-mix(in srgb, var(--accent) 14%, transparent); } 100% { background: transparent; } }
+/* ---------- Takvim şeridi ---------- */
+.week { margin-top: 22px; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--card); border-radius: 12px; padding: 8px 6px; }
+.week button { display: grid; justify-items: center; gap: 4px; padding: 4px 0; border-radius: 10px; }
+.week .wd { font-size: 12px; font-weight: 600; color: var(--label2); text-transform: uppercase; letter-spacing: .02em; }
+.week .dn { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font: 600 20px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.week button.today .dn { color: var(--red); }
+.week button[aria-selected="true"] .dn { background: var(--accent); color: #fff; }
+.week button.today[aria-selected="true"] .dn { background: var(--red); }
+.day-h { padding: 22px 4px 10px; }
+.day-h h2 { font: 700 22px/1.2 var(--font-display); }
+.day-h p { margin-top: 2px; font-size: 15px; color: var(--label2); }
+
+/* ---------- Etkinlik satırı ---------- */
+.ev { --inset: 84px; align-items: flex-start; padding: 12px 16px; min-height: 64px; text-align: left; }
+.ev .tm { width: 56px; flex: none; padding-top: 1px; font: 600 17px/1.25 var(--font); font-variant-numeric: tabular-nums; }
+.ev .tm small { display: block; font-size: 12px; font-weight: 500; color: var(--label2); }
+.ev .tm.word { font-size: 15px; font-weight: 500; color: var(--label2); }
+.ev .bd { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.ev .t { font-weight: 600; }
+.ev .s { font-size: 15px; color: var(--label2); }
+.ev .h { font-size: 15px; color: var(--accent); margin-top: 2px; }
+.ev .h.warn { color: var(--orange); }
+.ev .h.bad { color: var(--red); }
+.ev svg.chev { align-self: center; }
+.idea { --inset: 16px; }
+
+/* ---------- Detay paneli ---------- */
+.sheet-wrap { position: fixed; inset: 0; z-index: 50; }
+.sheet-wrap[hidden] { display: none; }
+.backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, .3); opacity: 0; transition: opacity .25s; }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; max-width: 600px; max-height: 90%; display: flex; flex-direction: column; background: var(--bg); border-radius: 14px 14px 0 0; transform: translateY(100%); transition: transform .34s cubic-bezier(.2, .9, .25, 1); box-shadow: 0 -8px 30px rgba(0, 0, 0, .12); }
+.sheet-wrap.open .backdrop { opacity: 1; }
+.sheet-wrap.open .sheet { transform: none; }
+.sheet-top { position: relative; display: flex; justify-content: flex-end; padding: 10px 14px 0; touch-action: none; }
+.grab { position: absolute; top: 6px; left: 50%; width: 36px; height: 5px; margin-left: -18px; border-radius: 3px; background: var(--label3); }
+.done { color: var(--accent); font-weight: 600; padding: 8px 4px; }
+.sheet-body { overflow-y: auto; padding: 0 16px calc(28px + env(safe-area-inset-bottom)); overscroll-behavior: contain; }
+.sh-h { padding: 2px 4px 16px; }
+.sh-h h2 { font: 700 28px/1.15 var(--font-display); }
+.sh-h p { margin-top: 4px; font-size: 15px; color: var(--label2); }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.actions.one { grid-template-columns: 1fr; }
+.btn { height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 17px; }
+.btn.fill { background: var(--accent); color: #fff; }
+.btn.tint { background: var(--accent-tint); color: var(--accent); }
+.go .row { --inset: 50px; align-items: flex-start; }
+.go .row .ico { padding-top: 1px; }
+.go .row.lead .row-t b { font-weight: 600; }
+.note { --inset: 16px; font-size: 15px; line-height: 1.4; }
+.callout { margin-top: 12px; border-radius: 12px; padding: 12px 14px; font-size: 15px; line-height: 1.4; background: rgba(255, 149, 0, .14); }
+.callout.bad { background: rgba(255, 59, 48, .14); }
+.callout:empty { display: none; }
+input[type="time"] { font: 400 17px var(--font); color: var(--label); background: var(--fill); border: 0; border-radius: 8px; padding: 6px 10px; min-width: 96px; }
+.segctl { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--fill); border-radius: 9px; padding: 2px; }
+.segctl button { padding: 7px 8px; border-radius: 7px; font-size: 15px; font-weight: 500; text-align: center; }
+.segctl button[aria-pressed="true"] { background: var(--seg-on); font-weight: 600; box-shadow: 0 3px 8px rgba(0, 0, 0, .12), 0 1px 1px rgba(0, 0, 0, .04); }
+.kv { --inset: 16px; align-items: flex-start; }
+.kv .row-t { flex: 0 0 40%; color: var(--label2); font-size: 15px; padding-top: 1px; }
+.kv .row-v { flex: 1; text-align: left; color: var(--label); font-size: 15px; line-height: 1.4; }
 
 /* ---------- Harita ---------- */
-.map { margin-top: 6px; }
-.map svg { display: block; width: 100%; height: auto; border-radius: 10px; background: var(--soft); }
-.map-scroll { overflow-x: auto; border-radius: 10px; }
-.map figcaption { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; padding: 0; list-style: none; font-size: 13.5px; }
-.legend li { display: flex; gap: 6px; align-items: center; }
-.legend .num { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--paper); font: 600 11px/1 var(--f-mono); }
+.map-card { background: var(--land); border-radius: 12px; overflow: hidden; }
+.map-card svg { display: block; width: 100%; height: auto; }
+.pin-n { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff; font: 600 14px/1 var(--font); font-variant-numeric: tabular-nums; flex: none; }
+.places .row { --inset: 56px; text-align: left; }
 
-/* ---------- Günler ---------- */
-.day { margin-top: 14px; }
-.map.tabpanel { margin-top: 14px; }
-.day-head { display: flex; align-items: center; gap: 14px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
-.day-num { font: 700 40px/0.9 var(--f-display); letter-spacing: -.02em; min-width: 54px; }
-.day-head h2 { font: 700 21px/1.15 var(--f-display); }
-.day-head p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
-.pill { margin-left: auto; font: 600 11px/1 var(--f-display); letter-spacing: .12em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); }
-.pill.free { background: transparent; color: var(--brass); border: 1px solid currentColor; }
-.today-pill { display: none; }
-.day.is-today .today-pill { display: inline-block; }
+/* ---------- Liste ---------- */
+.chk { --inset: 54px; cursor: pointer; }
+.chk input { position: absolute; opacity: 0; pointer-events: none; }
+.chk .circ { width: 24px; height: 24px; border-radius: 50%; border: 1.6px solid var(--label3); display: grid; place-items: center; flex: none; transition: background .15s, border-color .15s; }
+.chk .circ svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 2.6; fill: none; opacity: 0; }
+.chk input:checked + .circ { background: var(--accent); border-color: var(--accent); }
+.chk input:checked + .circ svg { opacity: 1; }
+.chk input:checked ~ .row-t { color: var(--label2); }
+.chk input:focus-visible + .circ { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.tl { list-style: none; margin: 0; padding: 0; }
-.tl > li { display: grid; grid-template-columns: 78px 1fr; gap: 0 14px; position: relative; }
-.tl > li::before { content: ""; position: absolute; left: 92px; top: 0; bottom: 0; width: 2px; background: var(--line); }
-.tl > li:last-child::before { bottom: auto; height: 22px; }
-.ev-time { padding: 14px 0 12px; text-align: right; display: grid; align-content: start; gap: 2px; }
-.ev-time .t { font-size: 17px; font-weight: 600; line-height: 1.2; }
-.ev-time .tz { font: 500 11.5px/1.2 var(--f-mono); color: var(--muted); }
-.ev-body { padding: 12px 0 14px 22px; position: relative; min-width: 0; }
-.ev-body::before { content: ""; position: absolute; left: -6px; top: 19px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 3px solid var(--ink); }
-.ev.key .ev-body::before { border-color: var(--accent); background: var(--accent); }
-.ev.free .ev-body::before { border-color: var(--brass); }
-.ev h3 { font: 600 17px/1.3 var(--f-body); }
-.ev h3 .tag { font: 600 10.5px/1 var(--f-display); letter-spacing: .1em; text-transform: uppercase; padding: 3px 6px; border-radius: 4px; background: var(--soft); color: var(--muted); vertical-align: 2px; margin-left: 6px; white-space: nowrap; }
-.addr { margin: 3px 0 0; font-size: 14.5px; }
-.addr a { text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
-.note { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
-.note strong { color: var(--ink); font-weight: 600; }
-.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-.btn {
-  font: 500 13.5px/1 var(--f-body); color: var(--ink); text-decoration: none; cursor: pointer;
-  display: inline-flex; align-items: center; gap: 6px; padding: 8px 11px; border-radius: 8px;
-  border: 1px solid var(--line); background: var(--surface);
-}
-.btn:hover { border-color: var(--ink); }
-.btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.btn svg { width: 14px; height: 14px; flex: none; }
+/* ---------- Sekme çubuğu ---------- */
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--bar); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-top: .5px solid var(--sep); padding-bottom: env(safe-area-inset-bottom); }
+.tabbar .in { max-width: 600px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+.tabbar button { display: grid; justify-items: center; gap: 2px; padding: 7px 0 6px; color: var(--label2); font-size: 10.5px; font-weight: 500; }
+.tabbar button svg.i { width: 25px; height: 25px; }
+.tabbar button[aria-selected="true"] { color: var(--accent); }
 
-.leg .ev-time .t { font-size: 14px; color: var(--muted); }
-.leg .ev-time .tz { text-transform: uppercase; letter-spacing: .08em; font-size: 10.5px; }
-.leg .ev-body { padding-top: 10px; padding-bottom: 10px; }
-.leg .ev-body::before { width: 8px; height: 8px; left: -4px; top: 18px; border-width: 2px; border-color: var(--muted); }
-.leg-card { background: var(--soft); border-radius: 10px; padding: 9px 12px; font-size: 13.8px; display: grid; gap: 4px; }
-.leg-card .h { font-weight: 600; }
-.leg-card .opts { color: var(--muted); }
-.leg-card .opts b { color: var(--ink); font-weight: 600; }
-.leg-card a { font-weight: 500; }
-
-.ideas { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 8px; }
-.ideas li { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
-.ideas li b { display: block; font-weight: 600; font-size: 14.5px; }
-.ideas li span { color: var(--muted); }
-
-.meet-time { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; font-size: 13.5px; }
-.meet-time input { font: 500 15px/1 var(--f-mono); padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
-.alert { margin-top: 10px; border-radius: 10px; padding: 9px 12px; font-size: 13.8px; background: var(--warn-bg); color: var(--warn-ink); }
-.alert.bad { background: var(--bad-bg); color: var(--bad-ink); }
-.alert:empty { display: none; }
-.print-only { display: none; }
-
-/* Dönüş seçimine göre görünürlük (yalnızca ekranda; PDF'te ikisi de görünür) */
-@media screen {
-  body[data-alt="1"] .only-alt2, body[data-alt="2"] .only-alt1 { display: none; }
-}
-
-/* ---------- Pratik bilgiler + kontrol listesi ---------- */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-.info { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14px; }
-.info .k { font: 600 11px/1 var(--f-display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; display: block; }
-.info p { margin: 0; }
-.block-title { margin-top: 34px; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
-.block-title h2 { font: 700 21px/1.15 var(--f-display); }
-.block-title.first { margin-top: 0; }
-.block-title span { font-size: 13px; color: var(--muted); }
-.check { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
-.check label { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); cursor: pointer; font-size: 14px; }
-.check input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--accent); flex: none; }
-.check input:checked + span { color: var(--muted); text-decoration: line-through; }
-.foot { margin-top: 28px; font-size: 12.5px; color: var(--muted); }
-.toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 9px 14px; border-radius: 999px; font-size: 13.5px; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 20; }
+.toast { position: fixed; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom)); transform: translateX(-50%); background: rgba(0, 0, 0, .78); color: #fff; padding: 9px 16px; border-radius: 999px; font-size: 15px; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 60; }
 .toast.on { opacity: 1; }
+.print-doc { display: none; }
 
-@media (max-width: 560px) {
-  .facts { grid-template-columns: 1fr; }
-  .grid2, .check { grid-template-columns: 1fr; }
-  .tl > li { grid-template-columns: 62px 1fr; gap: 0 10px; }
-  .tl > li::before { left: 72px; }
-  .ev-time .t { font-size: 15.5px; }
-  .day-num { font-size: 34px; min-width: 44px; }
-  .map svg { min-width: 640px; }
-  .tl > li { grid-template-columns: 66px 1fr; }
-  .tl > li::before { left: 76px; }
-  .ev-time .tz { font-size: 10.5px; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  .view { animation: none; }
+  .sheet, .backdrop { transition: none; }
 }
 
 /* ---------- Yazdırma / PDF ---------- */
 @media print {
-  @page { size: A4; margin: 12mm 12mm 14mm; }
-  body { background: #fff; font-size: 11.6px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .wrap { max-width: none; padding: 0; }
-  .board { border-radius: 12px; padding: 16px 18px; gap: 12px; }
-  .route h1 { font-size: 30px; }
-  .live, .chips, .seg, .actions, .meet-time input, .no-print, .toast, .daynav { display: none !important; }
-  .day { margin-top: 16px; }
-  #p-bilgi { margin-top: 22px; }
-  #p-liste .block-title.first { margin-top: 22px; }
-  .print-only { display: revert; }
-  .scr { display: none !important; }
-  .ideas { grid-template-columns: 1fr 1fr; gap: 6px; }
-  .choose { margin-top: 12px; }
-  .panel { padding: 12px 14px; }
-  .cmp, .cmp td.v { font-size: 11px; }
-  .cmp td.sel, .cmp th.sel { background: none; }
-  .map svg { max-height: 300px; }
-  .day { margin-top: 16px; break-inside: auto; }
-  .day-head { break-after: avoid; }
-  .tl > li { break-inside: avoid; grid-template-columns: 64px 1fr; }
-  .tl > li::before { left: 76px; }
-  .ev-time { padding: 9px 0 7px; }
-  .ev-body { padding: 8px 0 9px 20px; }
-  .ev-body::before { top: 14px; }
-  .ev h3 { font-size: 13.5px; }
-  .ev-time .t { font-size: 13.5px; }
-  .addr, .note, .leg-card, .ideas li, .info, .check label { font-size: 11px; }
-  .day-num { font-size: 30px; }
-  .day-head h2, .block-title h2 { font-size: 17px; }
-  .page-break { break-before: page; }
-  .info, .ideas li, .check label, .panel { break-inside: avoid; }
-  .check input { width: 12px; height: 12px; }
-  .check input:checked + span { text-decoration: none; color: inherit; }
-  .alert:empty { display: none; }
-  a[href^="http"] { text-decoration: none; }
+  @page { size: A4; margin: 13mm 13mm 15mm; }
+  html, body { background: #fff; color: #000; }
+  body { font-size: 10.5pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .app, .tabbar, .sheet-wrap, .toast { display: none !important; }
+  .print-doc { display: block; }
+  .p-head h1 { font: 700 24pt/1.1 var(--font-display); letter-spacing: -.01em; }
+  .p-head p { color: #6e6e73; margin-top: 2pt; font-size: 11pt; }
+  .p-sum { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8pt; margin-top: 12pt; }
+  .p-sum div { background: #f2f2f7; border-radius: 8pt; padding: 8pt 10pt; }
+  .p-sum b { display: block; font-size: 8pt; text-transform: uppercase; letter-spacing: .03em; color: #6e6e73; font-weight: 600; margin-bottom: 2pt; }
+  .p-sum span { display: block; font-size: 10pt; line-height: 1.35; }
+  .p-sec { margin-top: 16pt; break-inside: auto; }
+  .p-sec h2 { font: 700 14pt/1.2 var(--font-display); padding-bottom: 4pt; border-bottom: .75pt solid #d1d1d6; break-after: avoid; }
+  .p-sec h2 small { font: 400 10pt var(--font); color: #6e6e73; margin-left: 6pt; }
+  .p-ev { display: grid; grid-template-columns: 52pt 1fr; gap: 0 10pt; padding: 7pt 0; border-bottom: .5pt solid #e5e5ea; break-inside: avoid; }
+  .p-ev .tm { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .p-ev .tm small { display: block; font-size: 8pt; font-weight: 500; color: #6e6e73; }
+  .p-ev .t { font-weight: 600; }
+  .p-ev .tag { font-size: 7.5pt; font-weight: 600; color: #007aff; background: rgba(0, 122, 255, .1); border-radius: 4pt; padding: 1pt 4pt; margin-left: 4pt; vertical-align: 1pt; }
+  .p-ev .pl, .p-ev .go, .p-ev .nt { font-size: 9.5pt; color: #3a3a3c; margin-top: 1.5pt; line-height: 1.4; }
+  .p-ev .go b { color: #000; font-weight: 600; }
+  .p-ev a { color: #007aff; }
+  .p-tbl { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin-top: 4pt; }
+  .p-tbl th, .p-tbl td { text-align: left; padding: 5pt 6pt; border-bottom: .5pt solid #e5e5ea; vertical-align: top; }
+  .p-tbl thead th { font-size: 8pt; text-transform: uppercase; letter-spacing: .03em; color: #6e6e73; font-weight: 600; }
+  .p-tbl tbody th { font-weight: 500; color: #6e6e73; width: 26%; }
+  .p-map { margin-top: 8pt; border-radius: 8pt; overflow: hidden; background: #f5f2eb; break-inside: avoid; }
+  .p-map svg { display: block; width: 100%; height: auto; }
+  .p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6pt 14pt; margin-top: 6pt; }
+  .p-grid div { break-inside: avoid; font-size: 9.5pt; line-height: 1.4; }
+  .p-grid b { display: block; font-size: 9.5pt; }
+  .p-check { list-style: none; padding: 0; margin: 6pt 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 5pt 14pt; font-size: 9.5pt; }
+  .p-check li::before { content: ""; display: inline-block; width: 8pt; height: 8pt; border: .9pt solid #8e8e93; border-radius: 50%; margin-right: 6pt; vertical-align: -1pt; }
+  .p-foot { margin-top: 12pt; font-size: 8.5pt; color: #6e6e73; }
+  .p-break { break-before: page; }
+  .p-keep { break-inside: avoid; }
 }
 </style>
 </head>
-<body data-alt="1">
-<div class="wrap">
+<body data-alt="1" data-pdf="1">
 
-  <!-- ===== Başlık panosu ===== -->
-  <header class="board">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><div class="eyebrow">İş seyahati programı</div><a class="no-print" href="Londra_Programi_27Kasim-1Aralik_2026.pdf" download style="color:var(--board-muted);font:500 13px/1.2 var(--f-body);text-underline-offset:3px">PDF olarak indir</a></div>
-    <div class="route">
-      <h1>İstanbul<span class="arrow">→</span>Londra</h1>
-      <span class="dates">27 KAS – <span class="only-alt1 scr">30 KAS</span><span class="only-alt2 scr">01 ARA</span><span class="print-only">30 KAS / 01 ARA</span> 2026</span>
-    </div>
-    <div class="facts">
-      <div class="fact">
-        <span class="k">Gidiş</span>
-        <span class="v">Cuma 27 Kasım · 13:55</span>
-        <span class="s">İstanbul saatiyle kalkış. Londra'ya varış ~15:05 (tahmini, yerel saat).</span>
-      </div>
-      <div class="fact">
-        <span class="k">Konaklama</span>
-        <span class="v">InterContinental London Park Lane</span>
-        <span class="s">One Hamilton Place, Park Lane, W1J 7QY · +44 20 7409 3131</span>
-      </div>
-      <div class="fact">
-        <span class="k">Dönüş</span>
-        <span class="v"><span class="only-alt1 scr">Pzt 30 Kasım · 22:40</span><span class="only-alt2 scr">Sal 1 Aralık · 11:20</span><span class="print-only">1) Pzt 30 Kas · 22:40<br>2) Sal 1 Ara · 11:20</span></span>
-        <span class="s"><span class="only-alt1 scr">1. alternatif · otelde 3 gece</span><span class="only-alt2 scr">2. alternatif · otelde 4 gece</span><span class="print-only">Karşılaştırma aşağıda</span></span>
-      </div>
-    </div>
-    <div class="live" aria-live="polite">
-      <div class="clock"><span>İstanbul</span><b id="clk-ist">--:--</b></div>
-      <div class="clock"><span>Londra</span><b id="clk-lon">--:--</b></div>
-      <button type="button" class="next" id="next-btn" aria-label="Sıradaki adımın gününü aç">
-        <span class="k" id="next-k">Kalkışa kalan</span>
-        <span class="v" id="next-v">&nbsp;</span>
-        <span class="s" id="next-s">Cuma 27 Kasım · 13:55 İstanbul saati</span>
-      </button>
-    </div>
-  </header>
+<main class="app">
 
-  <!-- ===== Dönüş seçimi ===== -->
-  <section class="panel choose" aria-labelledby="choose-t">
-    <div class="choose-head">
-      <h2 class="sec-title" id="choose-t">Dönüş seçeneği</h2>
-      <span class="no-print" style="font-size:13px;color:var(--muted)">Seçiminiz programı günceller</span>
-    </div>
-    <div class="seg" role="group" aria-label="Dönüş seçeneği">
-      <button type="button" id="alt-btn-1" data-alt="1" aria-pressed="true">
-        <span class="n">1. alternatif</span>
-        <span class="d">Pzt 30 Kasım · 22:40</span>
-        <span class="a">Toplantılardan sonra aynı gece dönüş</span>
+  <!-- ===== Program ===== -->
+  <section class="view" id="v-program" aria-labelledby="h-program">
+    <header class="lt">
+      <h1 id="h-program">Londra</h1>
+      <p id="sub-dates">27 – 30 Kasım 2026</p>
+    </header>
+
+    <button type="button" class="next" id="next">
+      <span>
+        <span class="k" id="next-k">Kalkışa</span>
+        <span class="v num" id="next-v">&nbsp;</span>
+        <span class="s" id="next-s">Cuma, 27 Kasım · 13:55 (İstanbul)</span>
+      </span>
+      <svg class="chev" viewBox="0 0 8 13"><path d="M1.5 1.5 6.5 6.5 1.5 11.5"/></svg>
+    </button>
+
+    <div class="group" style="margin-top:14px">
+      <button type="button" class="row" data-sheet="hotel">
+        <span class="row-t"><b>Otel</b></span>
+        <span class="row-v">InterContinental</span>
+        <svg class="chev" viewBox="0 0 8 13"><path d="M1.5 1.5 6.5 6.5 1.5 11.5"/></svg>
       </button>
-      <button type="button" id="alt-btn-2" data-alt="2" aria-pressed="false">
-        <span class="n">2. alternatif</span>
-        <span class="d">Sal 1 Aralık · 11:20</span>
-        <span class="a">Bir gece daha kalıp sabah dönüş</span>
+      <button type="button" class="row" data-sheet="return">
+        <span class="row-t"><b>Dönüş</b></span>
+        <span class="row-v num" id="ret-v">Pzt 30 Kas · 22:40</span>
+        <svg class="chev" viewBox="0 0 8 13"><path d="M1.5 1.5 6.5 6.5 1.5 11.5"/></svg>
       </button>
     </div>
-    <div class="table-scroll">
-      <table class="cmp">
-        <thead><tr><th></th><th class="c1">1. alternatif</th><th class="c2">2. alternatif</th></tr></thead>
-        <tbody>
-          <tr><th>Londra'dan kalkış</th><td class="v c1">Pzt 30 Kas · 22:40</td><td class="v c2">Sal 1 Ara · 11:20</td></tr>
-          <tr><th>İstanbul'a varış</th><td class="v c1">Sal 1 Ara · ~05:20–05:45</td><td class="v c2">Sal 1 Ara · ~18:00–18:30</td></tr>
-          <tr><th>Otel</th><td class="c1">3 gece</td><td class="c2">4 gece; rezervasyonu 1 Aralık'a uzatın</td></tr>
-          <tr><th>30 Kasım akşamı</th><td class="c1">2. toplantıdan en geç ~18:30'da ayrılın, bagajı otelden alıp yola çıkın</td><td class="c2">Acele yok, akşam serbest</td></tr>
-          <tr><th>Dikkat</th><td class="c1">2. toplantı uzarsa uçuş riski; gece uçuşu, sabaha karşı varış</td><td class="c2">1 Aralık'ın büyük kısmı yolda geçer; sabah trafiği</td></tr>
-        </tbody>
-      </table>
-    </div>
+
+    <div class="week" role="tablist" aria-label="Günler" id="week"></div>
+    <div id="day"></div>
+    <p class="foot">Saatler Londra saatidir. İstanbul 3 saat ileride.</p>
   </section>
-
-  <!-- ===== Gün gezinme ===== -->
-  <div id="tabs-top"></div>
-  <nav class="chips" role="tablist" aria-label="Program günleri">
-    <button type="button" class="tab" role="tab" id="t-gun-27" data-tab="gun-27" data-date="2026-11-27" aria-controls="p-gun-27" aria-selected="true"><b>27</b><span>Cuma</span><small>Varış</small></button>
-    <button type="button" class="tab" role="tab" id="t-gun-28" data-tab="gun-28" data-date="2026-11-28" aria-controls="p-gun-28"><b>28</b><span>Cumartesi</span><small>Etkinlik · Gala</small></button>
-    <button type="button" class="tab" role="tab" id="t-gun-29" data-tab="gun-29" data-date="2026-11-29" aria-controls="p-gun-29"><b>29</b><span>Pazar</span><small>Serbest</small></button>
-    <button type="button" class="tab" role="tab" id="t-gun-30" data-tab="gun-30" data-date="2026-11-30" aria-controls="p-gun-30"><b>30</b><span>Pazartesi</span><small>Toplantılar</small></button>
-    <button type="button" class="tab only-alt2" role="tab" id="t-gun-01" data-tab="gun-01" data-date="2026-12-01" aria-controls="p-gun-01"><b>01</b><span>Salı</span><small>Dönüş</small></button>
-    <span class="tab-sep" aria-hidden="true"></span>
-    <button type="button" class="tab tab-util" role="tab" id="t-harita" data-tab="harita" aria-controls="p-harita"><span>Harita</span></button>
-    <button type="button" class="tab tab-util" role="tab" id="t-bilgi" data-tab="bilgi" aria-controls="p-bilgi"><span>Pratik bilgi</span></button>
-    <button type="button" class="tab tab-util" role="tab" id="t-liste" data-tab="liste" aria-controls="p-liste"><span>Liste</span></button>
-  </nav>
 
   <!-- ===== Harita ===== -->
-  <section class="panel map tabpanel" id="p-harita" data-tab="harita" role="tabpanel" aria-labelledby="t-harita">
-    <h2 class="sec-title" id="map-t">Programdaki noktalar</h2>
-    <figure style="margin:10px 0 0">
-      <div class="map-scroll"><svg id="map-svg" viewBox="0 0 1000 400" role="img" aria-label="Otel, Convene, Guildhall, HSBC Canary Wharf ve LetterOne'ın Londra üzerindeki konumları"></svg></div>
-      <figcaption>Şematik harita; Thames nehri yaklaşık çizilmiştir. Bir noktaya dokunursanız o günün programı açılır.</figcaption>
-    </figure>
-    <ul class="legend">
-      <li><span class="num">1</span>Otel · Park Lane</li>
-      <li><span class="num">2</span>Convene · Liverpool St</li>
-      <li><span class="num">3</span>Guildhall · Gala</li>
-      <li><span class="num">4</span>HSBC · Canary Wharf</li>
-      <li><span class="num">5</span>LetterOne · Mayfair</li>
-    </ul>
+  <section class="view" id="v-harita" aria-labelledby="h-harita" hidden>
+    <header class="lt"><h1 id="h-harita">Harita</h1><p>Programdaki yerler</p></header>
+    <div class="map-card"><svg id="map" role="img" aria-label="Otel, Convene, Guildhall, HSBC ve LetterOne'ın Londra'daki konumları"></svg></div>
+    <p class="foot">Şematik harita. Heathrow yaklaşık 22 km batıda.</p>
+    <div class="group places" style="margin-top:22px" id="places"></div>
   </section>
 
-  <!-- ===== 27 KASIM ===== -->
-  <section class="day tabpanel is-active" id="p-gun-27" data-tab="gun-27" data-date="2026-11-27" role="tabpanel" aria-labelledby="t-gun-27">
-    <div class="day-head">
-      <span class="day-num">27</span>
-      <div><h2>Cuma · Kasım</h2><p>Varış günü, akşam serbest</p></div>
-      <span class="pill today-pill">Bugün</span>
+  <!-- ===== Bilgi ===== -->
+  <section class="view" id="v-bilgi" aria-labelledby="h-bilgi" hidden>
+    <header class="lt"><h1 id="h-bilgi">Bilgi</h1></header>
+    <div class="group">
+      <div class="row"><span class="row-t"><b>Londra</b></span><span class="row-v num" id="clk-lon">--:--</span></div>
+      <div class="row"><span class="row-t"><b>İstanbul</b></span><span class="row-v num" id="clk-ist">--:--</span></div>
     </div>
-    <ol class="tl">
-      <li class="ev key" id="ev-depart">
-        <div class="ev-time"><span class="t">10:55</span><span class="tz">TR 13:55</span></div>
-        <div class="ev-body">
-          <h3>İstanbul'dan kalkış</h3>
-          <p class="note">Bilet saati <strong>13:55 (İstanbul)</strong>. Uçuş yaklaşık 4 saat 10 dakika. Londra, Kasım'da İstanbul'un 3 saat gerisinde.</p>
-        </div>
-      </li>
-      <li class="ev" id="ev-arrive">
-        <div class="ev-time"><span class="t">~15:05</span><span class="tz">TR ~18:05</span></div>
-        <div class="ev-body">
-          <h3>Londra'ya varış <span class="tag">tahmini</span></h3>
-          <p class="note">Hangi havalimanına indiğinizi biletten teyit edin. Hava 16:00 civarında kararıyor.</p>
-        </div>
-      </li>
-      <li class="leg">
-        <div class="ev-time"><span class="t">varış</span><span class="tz">yol</span></div>
-        <div class="ev-body">
-          <div class="leg-card">
-            <span class="h">Havalimanı → otel (Heathrow ise)</span>
-            <span class="opts"><b>Metro ~50 dk:</b> Piccadilly hattı, aktarmasız Hyde Park Corner'a; otel istasyon çıkışının hemen yanında. <b>Taksi ~45–70 dk</b> (trafiğe göre).</span>
-            <a href="#" data-dir="heathrow>hotel" target="_blank" rel="noopener">Canlı yol tarifi</a>
-          </div>
-        </div>
-      </li>
-      <li class="ev" id="ev-hotel">
-        <div class="ev-time"><span class="t">~16:30</span><span class="tz">TR ~19:30</span></div>
-        <div class="ev-body">
-          <h3>Otele giriş · InterContinental London Park Lane</h3>
-          <p class="addr"><a data-map="hotel" href="#" target="_blank" rel="noopener">One Hamilton Place, Park Lane, London W1J 7QY</a></p>
-          <p class="note">Tel. <span class="mono">+44 20 7409 3131</span> · En yakın metro: Hyde Park Corner (Piccadilly hattı)</p>
-          <div class="actions">
-            <a class="btn primary" data-map="hotel" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Haritada aç</a>
-            <button class="btn" type="button" data-copy="InterContinental London Park Lane, One Hamilton Place, Park Lane, London W1J 7QY">Adresi kopyala</button>
-          </div>
-        </div>
-      </li>
-      <li class="ev free">
-        <div class="ev-time"><span class="t">akşam</span><span class="tz">serbest</span></div>
-        <div class="ev-body">
-          <h3>Serbest akşam</h3>
-          <p class="note">Otelin hemen arkasındaki Hyde Park'ta <strong>Winter Wonderland</strong> açık: her gün 10:00–22:00, giriş biletli; bileti önceden online almak daha rahat. Yorgunsanız otelde erken akşam yemeği iyi bir seçenek.</p>
-        </div>
-      </li>
-    </ol>
-  </section>
+    <p class="foot">Londra, İstanbul'un 3 saat gerisinde.</p>
 
-  <!-- ===== 28 KASIM ===== -->
-  <section class="day tabpanel" id="p-gun-28" data-tab="gun-28" data-date="2026-11-28" role="tabpanel" aria-labelledby="t-gun-28">
-    <div class="day-head">
-      <span class="day-num">28</span>
-      <div><h2>Cumartesi · Kasım</h2><p>Etkinlik ve gala</p></div>
-      <span class="pill today-pill">Bugün</span>
+    <h2 class="sec-h">Pratik bilgiler</h2>
+    <div class="group">
+      <div class="row"><span class="row-t"><b>Hava</b><span>Genellikle 4–11°C, sık yağmur. Hava 16:00 civarında kararıyor.</span></span></div>
+      <div class="row"><span class="row-t"><b>Metro ve otobüs</b><span>Temassız kart ya da telefonla girişte ve çıkışta okutun. Günlük ücret tavanı otomatik uygulanır.</span></span></div>
+      <div class="row"><span class="row-t"><b>Priz</b><span>Tip G (üç köşeli). Adaptör gerekir.</span></span></div>
+      <div class="row"><span class="row-t"><b>Ödeme</b><span>Sterlin (GBP). Temassız ödeme her yerde geçer.</span></span></div>
+      <div class="row"><span class="row-t"><b>Acil durum</b><span>999 · Otel +44 20 7409 3131</span></span></div>
     </div>
-    <ol class="tl">
-      <li class="leg">
-        <div class="ev-time"><span class="t">10:00</span><span class="tz">çıkış</span></div>
-        <div class="ev-body">
-          <div class="leg-card">
-            <span class="h">Otelden en geç 10:00'da çıkın</span>
-            <span class="opts"><b>Metro ~35 dk:</b> Hyde Park Corner → Piccadilly hattı → Holborn, aktarma Central hattı → Liverpool Street. <b>Taksi ~30–40 dk.</b></span>
-            <a href="#" data-dir="hotel>convene" target="_blank" rel="noopener">Canlı yol tarifi</a>
-          </div>
-        </div>
-      </li>
-      <li class="ev key" id="ev-convene">
-        <div class="ev-time"><span class="t">11:00</span><span class="tz">TR 14:00</span></div>
-        <div class="ev-body">
-          <h3>Etkinlik · Convene 155 Bishopsgate</h3>
-          <p class="addr"><a data-map="convene" href="#" target="_blank" rel="noopener">155 Bishopsgate, London EC2M 3YD</a></p>
-          <p class="note">Liverpool Street istasyonuna 2 dk. İstasyon içinden <strong>Way Out 1 – Bishopsgate West</strong> (14. peron yanı) çıkışını kullanın.</p>
-          <div class="actions">
-            <a class="btn primary" data-map="convene" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Haritada aç</a>
-            <a class="btn" data-dir="hotel>convene" href="#" target="_blank" rel="noopener">Otelden yol tarifi</a>
-            <button class="btn" type="button" data-copy="Convene, 155 Bishopsgate, London EC2M 3YD">Adresi kopyala</button>
-          </div>
-        </div>
-      </li>
-      <li class="ev free">
-        <div class="ev-time"><span class="t">ara</span><span class="tz">opsiyonel</span></div>
-        <div class="ev-body">
-          <h3>Gala öncesi hazırlık</h3>
-          <p class="note">Etkinliğin bitişine göre otele dönüp hazırlanabilirsiniz. Doğrudan geçecekseniz Convene'den Guildhall'a <strong>yürüyerek ~10–12 dk</strong>. Gala kıyafet kuralını davetiyeden kontrol edin.</p>
-        </div>
-      </li>
-      <li class="leg">
-        <div class="ev-time"><span class="t">18:15</span><span class="tz">çıkış</span></div>
-        <div class="ev-body">
-          <div class="leg-card">
-            <span class="h">Otelden gidiyorsanız en geç 18:15'te çıkın</span>
-            <span class="opts"><b>Taksi ~25–40 dk.</b> <b>Metro ~35 dk:</b> Piccadilly → Holborn → Central hattı → St Paul's veya Bank, ardından ~7 dk yürüme.</span>
-            <a href="#" data-dir="hotel>guildhall" target="_blank" rel="noopener">Canlı yol tarifi</a>
-          </div>
-        </div>
-      </li>
-      <li class="ev key" id="ev-gala">
-        <div class="ev-time"><span class="t">19:00</span><span class="tz">TR 22:00</span></div>
-        <div class="ev-body">
-          <h3>Gala · Guildhall</h3>
-          <p class="addr"><a data-map="guildhall" href="#" target="_blank" rel="noopener">71 Basinghall St, London EC2V 7HH</a></p>
-          <p class="note">En yakın metro istasyonları: Bank, Moorgate, St Paul's (5–8 dk yürüme).</p>
-          <div class="actions">
-            <a class="btn primary" data-map="guildhall" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Haritada aç</a>
-            <a class="btn" data-dir="hotel>guildhall" href="#" target="_blank" rel="noopener">Otelden yol tarifi</a>
-            <button class="btn" type="button" data-copy="Guildhall, 71 Basinghall St, London EC2V 7HH">Adresi kopyala</button>
-          </div>
-        </div>
-      </li>
-    </ol>
-  </section>
 
-  <!-- ===== 29 KASIM ===== -->
-  <section class="day tabpanel" id="p-gun-29" data-tab="gun-29" data-date="2026-11-29" role="tabpanel" aria-labelledby="t-gun-29">
-    <div class="day-head">
-      <span class="day-num">29</span>
-      <div><h2>Pazar · Kasım</h2><p>Program yok</p></div>
-      <span class="pill free">Serbest gün</span>
-      <span class="pill today-pill">Bugün</span>
+    <div id="pdf-group" hidden>
+      <h2 class="sec-h">Belge</h2>
+      <div class="group">
+        <a class="row" href="Londra_Programi_27Kasim-1Aralik_2026.pdf" download>
+          <span class="ico"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></span>
+          <span class="row-t"><b style="color:var(--accent)">Programı PDF olarak indir</b></span>
+        </a>
+      </div>
     </div>
-    <ol class="tl">
-      <li class="ev free">
-        <div class="ev-time"><span class="t">gün</span><span class="tz">serbest</span></div>
-        <div class="ev-body">
-          <h3>Otele yakın seçenekler</h3>
-          <p class="note">İngiltere'de büyük mağazalar Pazar günü 6 saatle sınırlı açık; çoğu öğlen ile 18:00 arası. Pazartesi toplantıları için hazırlık zamanı da burada.</p>
-          <ul class="ideas">
-            <li><b>Hyde Park ve Winter Wonderland</b><span>Otelden yürüme mesafesi · 10:00–22:00 · biletli giriş</span></li>
-            <li><b>Knightsbridge ve Harrods</b><span>Otelden ~15 dk yürüme</span></li>
-            <li><b>Regent Street – Oxford Street</b><span>Noel süslemeleri; en güzeli hava karardıktan sonra</span></li>
-            <li><b>Otelde ikindi çayı</b><span>Otelin Wellington Lounge bölümünde servis ediliyor</span></li>
-          </ul>
-        </div>
-      </li>
-    </ol>
+    <p class="foot" style="margin-top:22px">Yol süreleri ve varış saatleri tahminidir. Kesin uçuş saatleri biletinizdedir.</p>
   </section>
 
-  <!-- ===== 30 KASIM ===== -->
-  <section class="day tabpanel" id="p-gun-30" data-tab="gun-30" data-date="2026-11-30" role="tabpanel" aria-labelledby="t-gun-30">
-    <div class="day-head">
-      <span class="day-num">30</span>
-      <div><h2>Pazartesi · Kasım</h2><p>İki toplantı<span class="only-alt1 scr"> ve akşam dönüş</span></p></div>
-      <span class="pill today-pill">Bugün</span>
-    </div>
-    <ol class="tl">
-      <li class="ev only-alt1">
-        <div class="ev-time"><span class="t">sabah</span><span class="tz">1. alt.</span></div>
-        <div class="ev-body">
-          <h3>Çıkış işlemi ve bagaj emaneti <span class="tag">1. alternatif</span></h3>
-          <p class="note">Çıkmadan check-out yapıp bagajı resepsiyona emanet edin. Akşam ikinci toplantı otele 10–12 dk yürüme mesafesinde; bagajı oradan alırsınız.</p>
-        </div>
-      </li>
-      <li class="leg">
-        <div class="ev-time"><span class="t">10:10</span><span class="tz">çıkış</span></div>
-        <div class="ev-body">
-          <div class="leg-card">
-            <span class="h">Otelden en geç 10:10'da çıkın</span>
-            <span class="opts"><b>Metro ~35 dk:</b> Green Park istasyonuna yürüyün (~8–10 dk) → Jubilee hattı → Canary Wharf (~18 dk). <b>Taksi ~35–50 dk.</b></span>
-            <a href="#" data-dir="hotel>hsbc" target="_blank" rel="noopener">Canlı yol tarifi</a>
-          </div>
-        </div>
-      </li>
-      <li class="ev key" id="ev-hsbc">
-        <div class="ev-time"><span class="t">11:00</span><span class="tz">TR 14:00</span></div>
-        <div class="ev-body">
-          <h3>HSBC toplantısı · Canary Wharf</h3>
-          <p class="addr"><a data-map="hsbc" href="#" target="_blank" rel="noopener">HSBC Canary Wharf, Canada Place, London E14 5AH</a></p>
-          <p class="note">Paylaşılan konum Canada Place'teki HSBC noktasını gösteriyor. Toplantı bir ofis binasındaysa bina girişini davetten teyit edin.</p>
-          <div class="actions">
-            <a class="btn primary" data-map="hsbc" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Haritada aç</a>
-            <a class="btn" data-dir="hotel>hsbc" href="#" target="_blank" rel="noopener">Otelden yol tarifi</a>
-            <button class="btn" type="button" data-copy="HSBC Canary Wharf, Canada Place, London E14 5AH">Adresi kopyala</button>
-          </div>
-        </div>
-      </li>
-      <li class="leg">
-        <div class="ev-time"><span class="t">sonra</span><span class="tz">yol</span></div>
-        <div class="ev-body">
-          <div class="leg-card">
-            <span class="h">Canary Wharf → Mayfair</span>
-            <span class="opts"><b>Metro ~30 dk:</b> Jubilee hattı Canary Wharf → Green Park (~20 dk), ardından ~6 dk yürüme. <b>Taksi ~40–55 dk.</b></span>
-            <a href="#" data-dir="hsbc>letterone" target="_blank" rel="noopener">Canlı yol tarifi</a>
-          </div>
-        </div>
-      </li>
-      <li class="ev key" id="ev-letterone">
-        <div class="ev-time"><span class="t" id="lo-time">saat?</span><span class="tz" id="lo-tz">teyit</span></div>
-        <div class="ev-body">
-          <h3>İkinci toplantı · LetterOne</h3>
-          <p class="addr"><a data-map="letterone" href="#" target="_blank" rel="noopener">20 Grafton St, London W1S 4DZ (Mayfair)</a></p>
-          <p class="note">Saati henüz belirtilmedi. Otele yürüyerek ~10–12 dk.</p>
-          <div class="meet-time no-print">
-            <label for="lo-input">Toplantı saatini girin (Londra):</label>
-            <input type="time" id="lo-input" min="11:30" max="21:00" step="300">
-          </div>
-          <div class="alert" id="lo-alert" role="status"></div>
-          <div class="actions">
-            <a class="btn primary" data-map="letterone" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Haritada aç</a>
-            <a class="btn" data-dir="hsbc>letterone" href="#" target="_blank" rel="noopener">HSBC'den yol tarifi</a>
-            <button class="btn" type="button" data-copy="LetterOne, 20 Grafton St, London W1S 4DZ">Adresi kopyala</button>
-          </div>
-        </div>
-      </li>
-
-      <!-- 1. alternatif: aynı gece dönüş -->
-      <li class="leg only-alt1">
-        <div class="ev-time"><span class="t">19:00</span><span class="tz">çıkış</span></div>
-        <div class="ev-body">
-          <div class="leg-card">
-            <span class="h">1. alternatif: bagajı alıp en geç 19:00'da otelden çıkın</span>
-            <span class="opts">Heathrow ise <b>metro ~50 dk:</b> Hyde Park Corner'dan Piccadilly hattı, aktarmasız. <b>Taksi ~50–75 dk</b> (Pazartesi akşamı). Havalimanında <b>20:10–20:40</b> arası olun.</span>
-            <a href="#" data-dir="hotel>heathrow" target="_blank" rel="noopener">Canlı yol tarifi</a>
-          </div>
-        </div>
-      </li>
-      <li class="ev key only-alt1" id="ev-return1">
-        <div class="ev-time"><span class="t">22:40</span><span class="tz">TR 01:40</span></div>
-        <div class="ev-body">
-          <h3>İstanbul'a dönüş <span class="tag">1. alternatif</span></h3>
-          <p class="note">Tahmini varış: <strong>Salı 1 Aralık, ~05:20–05:45 (İstanbul)</strong>.</p>
-        </div>
-      </li>
-
-      <!-- 2. alternatif: bir gece daha -->
-      <li class="ev free only-alt2">
-        <div class="ev-time"><span class="t">akşam</span><span class="tz">2. alt.</span></div>
-        <div class="ev-body">
-          <h3>Serbest akşam, otelde 4. gece <span class="tag">2. alternatif</span></h3>
-          <p class="note">Otel rezervasyonunun <strong>1 Aralık sabahına uzatıldığından</strong> emin olun.</p>
-        </div>
-      </li>
-    </ol>
+  <!-- ===== Liste ===== -->
+  <section class="view" id="v-liste" aria-labelledby="h-liste" hidden>
+    <header class="lt"><h1 id="h-liste">Liste</h1><p>Yola çıkmadan</p></header>
+    <div class="group" id="checklist"></div>
+    <p class="foot">İşaretleriniz bu cihazda saklanır.</p>
   </section>
+</main>
 
-  <!-- ===== 1 ARALIK (2. alternatif) ===== -->
-  <section class="day tabpanel only-alt2" id="p-gun-01" data-tab="gun-01" data-date="2026-12-01" role="tabpanel" aria-labelledby="t-gun-01">
-    <div class="day-head">
-      <span class="day-num">01</span>
-      <div><h2>Salı · Aralık</h2><p>Sabah dönüş (2. alternatif)</p></div>
-      <span class="pill today-pill">Bugün</span>
-    </div>
-    <ol class="tl">
-      <li class="leg">
-        <div class="ev-time"><span class="t">07:45</span><span class="tz">çıkış</span></div>
-        <div class="ev-body">
-          <div class="leg-card">
-            <span class="h">Check-out yapıp en geç 07:45'te otelden çıkın</span>
-            <span class="opts">Sabah trafiği yoğun. Heathrow ise <b>metro ~50 dk</b> (Hyde Park Corner'dan Piccadilly hattı, aktarmasız; önerilen). <b>Taksi ~60–90 dk.</b> Havalimanında <b>08:50–09:20</b> arası olun.</span>
-            <a href="#" data-dir="hotel>heathrow" target="_blank" rel="noopener">Canlı yol tarifi</a>
-          </div>
-        </div>
-      </li>
-      <li class="ev key" id="ev-return2">
-        <div class="ev-time"><span class="t">11:20</span><span class="tz">TR 14:20</span></div>
-        <div class="ev-body">
-          <h3>İstanbul'a dönüş <span class="tag">2. alternatif</span></h3>
-          <p class="note">Tahmini varış: <strong>~18:00–18:30 (İstanbul)</strong>.</p>
-        </div>
-      </li>
-    </ol>
-  </section>
+<!-- ===== Sekme çubuğu ===== -->
+<nav class="tabbar" aria-label="Bölümler">
+  <div class="in" role="tablist">
+    <button type="button" role="tab" data-view="program" aria-selected="true">
+      <svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Program
+    </button>
+    <button type="button" role="tab" data-view="harita" aria-selected="false">
+      <svg class="i" viewBox="0 0 24 24"><path d="M9 4.5 3.5 6.5v13l5.5-2 6 2 5.5-2v-13l-5.5 2-6-2z"/><path d="M9 4.5v13M15 6.5v13"/></svg>Harita
+    </button>
+    <button type="button" role="tab" data-view="bilgi" aria-selected="false">
+      <svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg>Bilgi
+    </button>
+    <button type="button" role="tab" data-view="liste" aria-selected="false">
+      <svg class="i" viewBox="0 0 24 24"><path d="M10 6.5h10M10 12h10M10 17.5h10M4 6.5l1.3 1.3L7.5 5.5M4 12l1.3 1.3 2.2-2.3M4 17.5l1.3 1.3 2.2-2.3"/></svg>Liste
+    </button>
+  </div>
+</nav>
 
-  <!-- ===== Pratik bilgiler ===== -->
-  <section class="day tabpanel" id="p-bilgi" data-tab="bilgi" role="tabpanel" aria-labelledby="t-bilgi">
-    <div class="block-title first"><h2>Pratik bilgiler</h2><span>Kasım sonu, Londra</span></div>
-    <div class="grid2">
-      <div class="info"><span class="k">Saat farkı</span><p>Londra, İstanbul'un <strong>3 saat gerisinde</strong>. Bu programdaki büyük saatler Londra saatidir; altlarında İstanbul karşılığı var.</p></div>
-      <div class="info"><span class="k">Hava</span><p>Genellikle 4–11°C ve sık sık yağmurlu. Gün 16:00 civarında kararıyor. Şemsiye ve kat kat giyim işe yarar.</p></div>
-      <div class="info"><span class="k">Metro ve otobüs</span><p>Temassız kart ya da telefonla (Apple Pay) girişte ve çıkışta okutun. Günlük ücret tavanı otomatik uygulanır; gün boyu aynı kartı/telefonu kullanın.</p></div>
-      <div class="info"><span class="k">Priz</span><p>İngiltere'de <strong>Tip G</strong> (üç köşeli) priz kullanılıyor; adaptör gerekir.</p></div>
-      <div class="info"><span class="k">Acil durum</span><p>Polis, ambulans, itfaiye: <strong class="mono">999</strong>. Otel: <span class="mono">+44 20 7409 3131</span>.</p></div>
-      <div class="info"><span class="k">Ödeme</span><p>Para birimi sterlin (GBP). Temassız ödeme neredeyse her yerde geçiyor.</p></div>
-    </div>
-  </section>
-
-  <!-- ===== Kontrol listesi ===== -->
-  <section class="day tabpanel" id="p-liste" data-tab="liste" role="tabpanel" aria-labelledby="t-liste">
-    <div class="block-title first"><h2>Yola çıkmadan</h2><span class="no-print">İşaretleriniz bu cihazda saklanır</span></div>
-    <ul class="check" id="checklist">
-      <li><label><input type="checkbox" id="c1"><span>Pasaport ve İngiltere vizesi (geçerlilik tarihleri)</span></label></li>
-      <li><label><input type="checkbox" id="c2"><span>E-bilet / biniş kartları (gidiş ve seçilen dönüş)</span></label></li>
-      <li><label><input type="checkbox" id="c3"><span>Otel rezervasyonu (2. alternatifte +1 gece)</span></label></li>
-      <li><label><input type="checkbox" id="c4"><span>Etkinlik ve gala davetiyeleri / kayıt QR kodları</span></label></li>
-      <li><label><input type="checkbox" id="c5"><span>Gala kıyafeti</span></label></li>
-      <li><label><input type="checkbox" id="c6"><span>Tip G priz adaptörü, şarj aleti, powerbank</span></label></li>
-      <li><label><input type="checkbox" id="c7"><span>Kartvizit ve toplantı dokümanları</span></label></li>
-      <li><label><input type="checkbox" id="c8"><span>Şemsiye veya yağmurluk</span></label></li>
-    </ul>
-    <p class="foot">Yol süreleri tahminidir; yola çıkmadan “Canlı yol tarifi” ile güncel süreyi kontrol edin. Varış saatleri, bu hatlardaki tipik uçuş sürelerine göre tahmin edilmiştir; kesin saatler biletinizdedir.</p>
-  </section>
-
+<!-- ===== Detay paneli ===== -->
+<div class="sheet-wrap" id="sheet" hidden>
+  <div class="backdrop" data-close></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title">
+    <div class="sheet-top" id="sheet-top"><span class="grab"></span><button type="button" class="done" data-close>Bitti</button></div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
+
+<!-- ===== PDF / yazdırma belgesi (aynı veriden üretilir) ===== -->
+<article class="print-doc" id="print-doc"></article>
 
 <script>
 (function () {
   "use strict";
 
-  /* ---------- Yerler ---------- */
-  var P = {
-    hotel:     { q: "InterContinental London Park Lane, One Hamilton Place, London W1J 7QY", lat: 51.5038, lon: -0.1505,
+  /* ================= Veri ================= */
+  var PLACES = {
+    hotel:     { name: "InterContinental London Park Lane", addr: "One Hamilton Place, Park Lane, London W1J 7QY", lat: 51.5038, lon: -0.1505,
                  map: "https://www.google.com/maps/search/?api=1&query=InterContinental+London+Park+Lane" },
-    convene:   { q: "Convene 155 Bishopsgate, London EC2M 3YD", lat: 51.5194, lon: -0.0812,
+    convene:   { name: "Convene 155 Bishopsgate", addr: "155 Bishopsgate, London EC2M 3YD", lat: 51.5194, lon: -0.0812,
                  map: "https://www.google.com/maps/search/?api=1&query=Convene+155+Bishopsgate+London+EC2M+3YD" },
-    guildhall: { q: "Guildhall, 71 Basinghall St, London EC2V 7HH", lat: 51.5159, lon: -0.0920,
+    guildhall: { name: "Guildhall", addr: "71 Basinghall St, London EC2V 7HH", lat: 51.5159, lon: -0.0920,
                  map: "https://maps.app.goo.gl/5EUxhiaS1o4yG4kq8" },
-    hsbc:      { q: "HSBC Canary Wharf Canada Place, London E14 5AH", lat: 51.5056, lon: -0.0173,
+    hsbc:      { name: "HSBC Canary Wharf", addr: "Canada Place, Canary Wharf, London E14 5AH", lat: 51.5056, lon: -0.0173,
                  map: "https://maps.app.goo.gl/XDXmtQzNjV9vGxN3A" },
-    letterone: { q: "LetterOne, 20 Grafton St, London W1S 4DZ", lat: 51.5098, lon: -0.1434,
+    letterone: { name: "LetterOne", addr: "20 Grafton St, London W1S 4DZ", lat: 51.5098, lon: -0.1434,
                  map: "https://maps.app.goo.gl/xrt593ySUL7G34Ze9" },
-    heathrow:  { q: "Heathrow Airport, London" }
+    heathrow:  { name: "Heathrow", addr: "Heathrow Airport, London" }
+  };
+  function q(k) { var p = PLACES[k]; return p.name + ", " + p.addr; }
+  function dirUrl(a, b) {
+    return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(q(a)) + "&destination=" + encodeURIComponent(q(b)) + "&travelmode=transit";
+  }
+
+  var DAYS = [
+    { id: "gun-27", date: "2026-11-27", wd: "Cum", dn: "27", title: "Cuma, 27 Kasım", sub: "Varış günü", items: [
+      { id: "ev-depart", tm: "13:55", tzl: "İstanbul", utc: "2026-11-27T10:55:00Z", t: "İstanbul'dan kalkış", s: "Uçuş yaklaşık 4 sa 10 dk",
+        when: "Cuma, 27 Kasım · 13:55 İstanbul saati", whenSub: "Londra saatiyle 10:55",
+        notes: ["Kalkış saati İstanbul saatidir; programdaki diğer saatler Londra saatidir."] },
+      { id: "ev-arrive", tm: "~15:05", utc: "2026-11-27T15:05:00Z", t: "Londra'ya varış", s: "Tahmini saat",
+        go: { title: "Havalimanından otele (Heathrow ise)", opts: [["train", "Metro ~50 dk: Piccadilly hattı, aktarmasız Hyde Park Corner'a. Otel istasyonun hemen yanında."], ["car", "Taksi ~45–70 dk"]], dir: ["heathrow", "hotel"] },
+        notes: ["Hangi havalimanına indiğinizi biletten kontrol edin.", "Hava 16:00 civarında kararıyor."] },
+      { id: "ev-hotel", tm: "~16:30", utc: "2026-11-27T16:30:00Z", t: "Otele giriş", s: "InterContinental London Park Lane", place: "hotel",
+        notes: ["Telefon: +44 20 7409 3131", "En yakın metro: Hyde Park Corner"] },
+      { id: "ev-eve27", tm: "Akşam", word: true, t: "Serbest akşam", s: "Winter Wonderland otelin hemen arkasında",
+        notes: ["Hyde Park'taki Winter Wonderland her gün 10:00–22:00 açık.", "Giriş biletli; bileti önceden online almak daha rahat."] }
+    ]},
+    { id: "gun-28", date: "2026-11-28", wd: "Cmt", dn: "28", title: "Cumartesi, 28 Kasım", sub: "Etkinlik ve gala", items: [
+      { id: "ev-convene", tm: "11:00", utc: "2026-11-28T11:00:00Z", t: "Etkinlik", s: "Convene · 155 Bishopsgate", place: "convene",
+        hint: "10:00'da otelden çıkın", leaveUtc: "2026-11-28T10:00:00Z",
+        go: { lead: "Otelden en geç 10:00'da çıkın", opts: [["train", "Metro ~35 dk: Hyde Park Corner → Piccadilly hattı → Holborn, aktarma Central hattı → Liverpool Street"], ["car", "Taksi ~30–40 dk"]], dir: ["hotel", "convene"] },
+        notes: ["Liverpool Street istasyonunda “Way Out 1 – Bishopsgate West” çıkışını kullanın (14. peron yanı). Mekân 2 dk."] },
+      { id: "ev-gala", tm: "19:00", utc: "2026-11-28T19:00:00Z", t: "Gala", s: "Guildhall", place: "guildhall",
+        hint: "Otelden gidecekseniz 18:15'te çıkın", leaveUtc: "2026-11-28T18:15:00Z",
+        go: { lead: "Otelden gidecekseniz en geç 18:15'te çıkın", opts: [["car", "Taksi ~25–40 dk"], ["train", "Metro ~35 dk: Piccadilly → Holborn → Central hattı → St Paul's veya Bank, sonra ~7 dk yürüme"], ["walk", "Convene'den doğrudan: yürüyerek ~10–12 dk"]], dir: ["hotel", "guildhall"] },
+        notes: ["Kıyafet kuralını davetiyeden kontrol edin.", "En yakın metro: Bank, Moorgate, St Paul's."] }
+    ]},
+    { id: "gun-29", date: "2026-11-29", wd: "Paz", dn: "29", title: "Pazar, 29 Kasım", sub: "Serbest gün", items: [
+      { id: "ev-free29", tm: "Gün boyu", word: true, t: "Program yok", s: "Otele yakın öneriler aşağıda",
+        notes: ["Büyük mağazalar Pazar günü genellikle öğlen ile 18:00 arası açık."] }
+    ], ideas: [
+      { t: "Hyde Park ve Winter Wonderland", s: "Otelden yürüme mesafesi · 10:00–22:00", map: "https://www.google.com/maps/search/?api=1&query=Hyde+Park+Winter+Wonderland" },
+      { t: "Knightsbridge ve Harrods", s: "Otelden ~15 dk yürüme", map: "https://www.google.com/maps/search/?api=1&query=Harrods+London" },
+      { t: "Regent Street ve Oxford Street", s: "Noel süslemeleri, en güzeli hava karardıktan sonra", map: "https://www.google.com/maps/search/?api=1&query=Regent+Street+London" },
+      { t: "Otelde ikindi çayı", s: "Wellington Lounge", map: "https://www.google.com/maps/search/?api=1&query=InterContinental+London+Park+Lane" }
+    ]},
+    { id: "gun-30", date: "2026-11-30", wd: "Pzt", dn: "30", title: "Pazartesi, 30 Kasım", sub: "İki toplantı", items: [
+      { id: "ev-checkout", alt: "1", tm: "Sabah", word: true, t: "Check-out ve bagaj emaneti", s: "Akşam dönüş için",
+        notes: ["Çıkmadan bagajı resepsiyona bırakın.", "Akşam ikinci toplantıdan otele yürüyerek 10–12 dk; bagajı oradan alırsınız."] },
+      { id: "ev-hsbc", tm: "11:00", utc: "2026-11-30T11:00:00Z", t: "HSBC toplantısı", s: "Canary Wharf", place: "hsbc",
+        hint: "10:10'da otelden çıkın", leaveUtc: "2026-11-30T10:10:00Z",
+        go: { lead: "Otelden en geç 10:10'da çıkın", opts: [["train", "Metro ~35 dk: Green Park istasyonuna yürüyün (~8–10 dk) → Jubilee hattı → Canary Wharf"], ["car", "Taksi ~35–50 dk"]], dir: ["hotel", "hsbc"] },
+        notes: ["Paylaşılan konum Canada Place'teki HSBC noktasını gösteriyor. Toplantı bir ofis binasındaysa girişi davetten kontrol edin."] },
+      { id: "ev-letterone", tm: "?", meeting: true, t: "İkinci toplantı", s: "LetterOne · Mayfair", place: "letterone",
+        go: { title: "HSBC'den", opts: [["train", "Metro ~30 dk: Jubilee hattı → Green Park, sonra ~6 dk yürüme"], ["car", "Taksi ~40–55 dk"]], dir: ["hsbc", "letterone"] },
+        notes: ["Otele yürüyerek 10–12 dk."] },
+      { id: "ev-airport1", alt: "1", tm: "19:00", utc: "2026-11-30T19:00:00Z", t: "Havalimanına çıkış", s: "Bagajı otelden alın",
+        go: { lead: "En geç 19:00'da otelden çıkın", opts: [["train", "Heathrow ise metro ~50 dk: Hyde Park Corner'dan Piccadilly hattı, aktarmasız"], ["car", "Taksi ~50–75 dk (Pazartesi akşamı)"], ["clock", "Havalimanında 20:10–20:40 arası olun"]], dir: ["hotel", "heathrow"] } },
+      { id: "ev-return1", alt: "1", tm: "22:40", utc: "2026-11-30T22:40:00Z", t: "İstanbul'a dönüş", s: "Varış Salı ~05:20–05:45 (İstanbul)",
+        notes: ["Varış saati tahminidir."] },
+      { id: "ev-eve30", alt: "2", tm: "Akşam", word: true, t: "Serbest akşam", s: "Otelde 4. gece",
+        notes: ["Otel rezervasyonunun 1 Aralık sabahına uzatıldığından emin olun."] }
+    ]},
+    { id: "gun-01", alt: "2", date: "2026-12-01", wd: "Sal", dn: "1", title: "Salı, 1 Aralık", sub: "Dönüş", items: [
+      { id: "ev-airport2", tm: "07:45", utc: "2026-12-01T07:45:00Z", t: "Havalimanına çıkış", s: "Check-out yapın",
+        go: { lead: "En geç 07:45'te otelden çıkın", opts: [["train", "Heathrow ise metro ~50 dk: Hyde Park Corner'dan Piccadilly hattı (sabah trafiğinde önerilir)"], ["car", "Taksi ~60–90 dk"], ["clock", "Havalimanında 08:50–09:20 arası olun"]], dir: ["hotel", "heathrow"] } },
+      { id: "ev-return2", tm: "11:20", utc: "2026-12-01T11:20:00Z", t: "İstanbul'a dönüş", s: "Varış ~18:00–18:30 (İstanbul)",
+        notes: ["Varış saati tahminidir."] }
+    ]}
+  ];
+
+  var RETURN = {
+    "1": { short: "Pzt 30 Kas · 22:40", rows: [["Kalkış", "Pazartesi 30 Kasım, 22:40"], ["İstanbul'a varış", "Salı 1 Aralık, ~05:20–05:45"], ["Otel", "3 gece"], ["30 Kasım akşamı", "İkinci toplantıdan en geç 18:30'da ayrılın, bagajı otelden alıp yola çıkın."], ["Dikkat", "Toplantı uzarsa uçuş riski. Gece uçuşu, sabaha karşı varış."]] },
+    "2": { short: "Sal 1 Ara · 11:20", rows: [["Kalkış", "Salı 1 Aralık, 11:20"], ["İstanbul'a varış", "Salı 1 Aralık, ~18:00–18:30"], ["Otel", "4 gece; rezervasyonu 1 Aralık'a uzatın"], ["30 Kasım akşamı", "Acele yok, akşam serbest."], ["Dikkat", "1 Aralık'ın büyük kısmı yolda geçer."]] }
   };
 
-  function dirUrl(a, b) {
-    return "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(P[a].q) +
-           "&destination=" + encodeURIComponent(P[b].q) + "&travelmode=transit";
-  }
-  document.querySelectorAll("[data-map]").forEach(function (el) { el.href = P[el.dataset.map].map; });
-  document.querySelectorAll("[data-dir]").forEach(function (el) {
-    var p = el.dataset.dir.split(">"); el.href = dirUrl(p[0], p[1]);
-  });
+  var CHECKS = ["Pasaport ve İngiltere vizesi", "E-bilet / biniş kartları", "Otel rezervasyonu (2. seçenekte +1 gece)", "Etkinlik ve gala davetiyeleri", "Gala kıyafeti", "Tip G priz adaptörü, şarj aleti", "Kartvizit ve toplantı dokümanları", "Şemsiye veya yağmurluk"];
 
-  /* ---------- Saklama (isteğe bağlı) ---------- */
+  /* ================= Yardımcılar ================= */
+  var ICON = {
+    train: '<svg class="i" viewBox="0 0 24 24"><rect x="6" y="3.5" width="12" height="13" rx="3"/><path d="M6 10.5h12M9 20l1.5-3.5M15 20l-1.5-3.5"/><circle cx="9.3" cy="13.5" r=".5" fill="currentColor"/><circle cx="14.7" cy="13.5" r=".5" fill="currentColor"/></svg>',
+    car: '<svg class="i" viewBox="0 0 24 24"><path d="M4.5 16.5v-3l1.6-4.6A2 2 0 0 1 8 7.5h8a2 2 0 0 1 1.9 1.4l1.6 4.6v3z"/><path d="M4.5 16.5v2M19.5 16.5v2M4.5 13.5h15"/><circle cx="8" cy="15" r=".6" fill="currentColor"/><circle cx="16" cy="15" r=".6" fill="currentColor"/></svg>',
+    walk: '<svg class="i" viewBox="0 0 24 24"><circle cx="13" cy="4.5" r="1.8"/><path d="M10 21l2.2-6.2L10 12l1.2-4.5 3 3H17M9.5 12.5 7.5 15M12.2 14.8 15 21"/></svg>',
+    clock: '<svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',
+    pin: '<svg class="i" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>',
+    ext: '<svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;color:var(--label3)"><path d="M8 16 16 8M10 8h6v6"/></svg>',
+    check: '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    copy: '<svg class="i" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></svg>'
+  };
+  var CHEV = '<svg class="chev" viewBox="0 0 8 13"><path d="M1.5 1.5 6.5 6.5 1.5 11.5"/></svg>';
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function plus3(hm) { var p = hm.replace("~", "").split(":").map(Number); return (hm.charAt(0) === "~" ? "~" : "") + pad((p[0] + 3) % 24) + ":" + pad(p[1]); }
   function load(k) { try { return localStorage.getItem("lon26-" + k); } catch (e) { return null; } }
   function save(k, v) { try { localStorage.setItem("lon26-" + k, v); } catch (e) {} }
 
-  /* ---------- Kopyalama ---------- */
-  var toastEl = document.getElementById("toast"), toastT;
-  function toast(msg) {
-    toastEl.textContent = msg; toastEl.classList.add("on");
-    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove("on"); }, 1800);
-  }
-  document.querySelectorAll("[data-copy]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      var txt = b.dataset.copy;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).then(function () { toast("Adres kopyalandı"); },
-          function () { toast(txt); });
-      } else { toast(txt); }
-    });
-  });
-
-  /* ---------- Dönüş seçimi ---------- */
   var alt = load("alt") === "2" ? "2" : "1";
-  function setAlt(a) {
-    alt = a; document.body.dataset.alt = a; save("alt", a);
-    document.querySelectorAll(".seg button").forEach(function (b) {
-      b.setAttribute("aria-pressed", b.dataset.alt === a ? "true" : "false");
-    });
-    document.querySelectorAll(".cmp .c1").forEach(function (c) { c.classList.toggle("sel", a === "1"); });
-    document.querySelectorAll(".cmp .c2").forEach(function (c) { c.classList.toggle("sel", a === "2"); });
-    renderMeeting(); tick();
-    if (a === "1" && current === "gun-01") showTab("gun-30", { scroll: false });
-    if (typeof buildDayNav === "function") buildDayNav();
+  var loTime = load("lo") || "";
+  var curView = "program", curDay = "gun-27", nextItem = null;
+
+  function visibleDays() { return DAYS.filter(function (d) { return !d.alt || d.alt === alt; }); }
+  function visibleItems(d) { return d.items.filter(function (it) { return !it.alt || it.alt === alt; }); }
+  function dayById(id) { return DAYS.filter(function (x) { return x.id === id; })[0]; }
+  function findItem(id) {
+    for (var i = 0; i < DAYS.length; i++) for (var j = 0; j < DAYS[i].items.length; j++) if (DAYS[i].items[j].id === id) return { day: DAYS[i], it: DAYS[i].items[j] };
+    return null;
   }
-  document.querySelectorAll(".seg button").forEach(function (b) {
-    b.addEventListener("click", function () { setAlt(b.dataset.alt); });
+  function itemTime(it) { return it.meeting ? (loTime || "?") : it.tm; }
+
+  function meetingHint() {
+    if (alt === "1") {
+      if (!loTime) return { cls: "", txt: "22:40 uçuşu için en geç 18:30'da ayrılın" };
+      var p = loTime.split(":").map(Number), left = 18 * 60 + 30 - (p[0] * 60 + p[1]);
+      if (left <= 0) return { cls: "bad", txt: "22:40 uçuşu için çok geç; 2. seçenek daha güvenli" };
+      if (left < 90) return { cls: "warn", txt: "En geç 18:30'da ayrılın, yalnızca " + left + " dk var" };
+      return { cls: "", txt: "En geç 18:30'da ayrılın (" + Math.floor(left / 60) + " sa " + (left % 60) + " dk var)" };
+    }
+    return { cls: "", txt: loTime ? "Otele yürüyerek 10–12 dk" : "Saati henüz belli değil" };
+  }
+
+  /* ================= Program ekranı ================= */
+  function renderWeek() {
+    var today = londonDate(new Date());
+    document.getElementById("week").innerHTML = visibleDays().map(function (d) {
+      var sel = d.id === curDay;
+      return '<button type="button" role="tab" id="t-' + d.id + '" data-day="' + d.id + '" aria-selected="' + sel + '" aria-controls="day" tabindex="' + (sel ? 0 : -1) + '"' +
+        (d.date === today ? ' class="today"' : "") + ' aria-label="' + esc(d.title) + '"><span class="wd">' + d.wd + '</span><span class="dn">' + d.dn + "</span></button>";
+    }).join("");
+  }
+  function evRow(it) {
+    var tm = itemTime(it), hint = it.hint ? { cls: "", txt: it.hint } : null;
+    if (it.meeting) hint = meetingHint();
+    var tmHtml = it.word ? '<span class="tm word">' + esc(tm) + "</span>"
+      : '<span class="tm">' + esc(tm === "?" ? "—" : tm) + (it.tzl ? "<small>" + esc(it.tzl) + "</small>" : "") + (it.meeting && !loTime ? "<small>saat?</small>" : "") + "</span>";
+    return '<button type="button" class="row ev" data-ev="' + it.id + '">' + tmHtml +
+      '<span class="bd"><span class="t">' + esc(it.t) + '</span><span class="s">' + esc(it.s) + "</span>" +
+      (hint ? '<span class="h ' + hint.cls + '">' + esc(hint.txt) + "</span>" : "") + "</span>" + CHEV + "</button>";
+  }
+  function renderDay() {
+    var d = dayById(curDay);
+    var html = '<div class="day-h"><h2>' + esc(d.title) + "</h2><p>" + esc(d.sub) + "</p></div>" +
+      '<div class="group">' + visibleItems(d).map(evRow).join("") + "</div>";
+    if (d.ideas) {
+      html += '<h3 class="sec-h">Öneriler</h3><div class="group">' + d.ideas.map(function (x) {
+        return '<a class="row idea" href="' + x.map + '" target="_blank" rel="noopener"><span class="row-t"><b>' + esc(x.t) + "</b><span>" + esc(x.s) + "</span></span>" + ICON.ext + "</a>";
+      }).join("") + "</div>";
+    }
+    var el = document.getElementById("day");
+    el.innerHTML = html;
+    el.classList.remove("view"); void el.offsetWidth; el.classList.add("view");
+  }
+  function selectDay(id, focus) {
+    curDay = id; renderWeek(); renderDay();
+    if (focus) { var t = document.getElementById("t-" + id); if (t) t.focus(); }
+    setHash(id);
+  }
+  document.getElementById("week").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-day]"); if (b) selectDay(b.dataset.day);
+  });
+  document.getElementById("week").addEventListener("keydown", function (e) {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    var ids = visibleDays().map(function (d) { return d.id; }), i = ids.indexOf(curDay);
+    i = e.key === "ArrowRight" ? Math.min(ids.length - 1, i + 1) : Math.max(0, i - 1);
+    e.preventDefault(); selectDay(ids[i], true);
+  });
+  document.getElementById("day").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-ev]"); if (b) openEvent(b.dataset.ev);
   });
 
-  /* ---------- İkinci toplantı saati ---------- */
-  var loInput = document.getElementById("lo-input");
-  var loTime = load("lo") || "";
-  loInput.value = loTime;
-  function pad(n) { return (n < 10 ? "0" : "") + n; }
-  function renderMeeting() {
-    var tEl = document.getElementById("lo-time"), tzEl = document.getElementById("lo-tz"), al = document.getElementById("lo-alert");
-    al.className = "alert"; al.textContent = "";
-    if (!loTime) { tEl.textContent = "saat?"; tzEl.textContent = "teyit"; return; }
-    var hm = loTime.split(":").map(Number);
-    tEl.textContent = loTime;
-    tzEl.textContent = "TR " + pad((hm[0] + 3) % 24) + ":" + pad(hm[1]);
-    if (alt !== "1") return;
-    var startMin = hm[0] * 60 + hm[1], latest = 18 * 60 + 30, left = latest - startMin;
-    if (left <= 0) {
-      al.className = "alert bad";
-      al.textContent = "Bu saat 22:40 uçuşu için çok geç: toplantıdan en geç 18:30'da ayrılmanız gerekiyor. 2. alternatif daha güvenli.";
-    } else if (left < 90) {
-      al.className = "alert bad";
-      al.textContent = "Sıkışık: 22:40 uçuşu için toplantıdan en geç 18:30'da ayrılmalısınız, toplantıya yalnızca " + left + " dk kalıyor.";
-    } else {
-      al.textContent = "22:40 uçuşu için toplantıdan en geç 18:30'da ayrılın (toplantıya " + Math.floor(left / 60) + " sa " + (left % 60) + " dk kalıyor).";
+  function applyAlt() {
+    document.body.dataset.alt = alt;
+    document.getElementById("ret-v").textContent = RETURN[alt].short;
+    document.getElementById("sub-dates").textContent = alt === "1" ? "27 – 30 Kasım 2026" : "27 Kasım – 1 Aralık 2026";
+    if (alt === "1" && curDay === "gun-01") { curDay = "gun-30"; if (curView === "program") setHash(curDay); }
+    renderWeek(); renderDay(); tick();
+  }
+
+  /* ================= Detay paneli ================= */
+  var sheet = document.getElementById("sheet"), sheetBody = document.getElementById("sheet-body"), lastFocus = null;
+  function openSheet(html) {
+    sheetBody.innerHTML = html; sheetBody.scrollTop = 0;
+    if (sheet.hidden) {
+      lastFocus = document.activeElement; sheet.hidden = false;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { sheet.classList.add("open"); }); });
+      document.documentElement.style.overflow = "hidden";
+      setTimeout(function () { var d = sheet.querySelector(".done"); if (d) d.focus({ preventScroll: true }); }, 60);
     }
   }
-  loInput.addEventListener("change", function () { loTime = loInput.value; save("lo", loTime); renderMeeting(); tick(); });
-
-  /* ---------- Saatler ve sıradaki ---------- */
-  function fmt(d, tz) { return new Intl.DateTimeFormat("tr-TR", { hour: "2-digit", minute: "2-digit", timeZone: tz }).format(d); }
-  function londonDate(d) {
-    return new Intl.DateTimeFormat("en-CA", { year: "numeric", month: "2-digit", day: "2-digit", timeZone: "Europe/London" }).format(d);
+  function closeSheet() {
+    if (sheet.hidden) return;
+    sheet.classList.remove("open");
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(function () { sheet.hidden = true; document.documentElement.style.overflow = ""; if (lastFocus && lastFocus.isConnected) lastFocus.focus({ preventScroll: true }); }, reduce ? 0 : 300);
   }
+  sheet.addEventListener("click", function (e) { if (e.target.closest("[data-close]")) closeSheet(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeSheet();
+    if (e.key === "Tab" && !sheet.hidden) {
+      var f = sheet.querySelectorAll("button, a[href], input"); if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  (function dragToClose() {
+    var top = document.getElementById("sheet-top"), panel = sheet.querySelector(".sheet"), y0 = null, dy = 0;
+    top.addEventListener("pointerdown", function (e) { if (e.target.closest("button")) return; y0 = e.clientY; dy = 0; panel.style.transition = "none"; try { top.setPointerCapture(e.pointerId); } catch (x) {} });
+    top.addEventListener("pointermove", function (e) { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); panel.style.transform = "translateY(" + dy + "px)"; });
+    function end() { if (y0 === null) return; panel.style.transition = ""; panel.style.transform = ""; y0 = null; if (dy > 90) closeSheet(); }
+    top.addEventListener("pointerup", end); top.addEventListener("pointercancel", end);
+  })();
+
+  function placeBlock(k) {
+    var p = PLACES[k];
+    return '<div class="group"><div class="row" style="--inset:50px"><span class="ico">' + ICON.pin + '</span><span class="row-t"><b>' + esc(p.name) + "</b><span>" + esc(p.addr) + "</span></span></div>" +
+      '<button type="button" class="row" style="--inset:50px" data-copy="' + esc(q(k)) + '"><span class="ico">' + ICON.copy + '</span><span class="row-t"><b style="color:var(--accent)">Adresi kopyala</b></span></button></div>';
+  }
+  function eventSheet(id) {
+    var f = findItem(id); if (!f) return "";
+    var it = f.it, d = f.day, tm = itemTime(it);
+    var when = it.when || (d.title + (it.word ? " · " + it.tm : (tm === "?" ? " · saat belli değil" : " · " + tm)));
+    var whenSub = it.whenSub || (!it.word && tm !== "?" && !it.tzl ? "İstanbul saatiyle " + plus3(tm) : "");
+    var h = '<div class="sh-h"><h2 id="sh-title">' + esc(it.t) + "</h2><p>" + esc(when) + (whenSub ? "<br>" + esc(whenSub) : "") + "</p></div>";
+    if (it.place) {
+      h += placeBlock(it.place);
+      h += '<div class="actions' + (it.go && it.go.dir ? "" : " one") + '"><a class="btn fill" href="' + PLACES[it.place].map + '" target="_blank" rel="noopener">Haritada aç</a>' +
+           (it.go && it.go.dir ? '<a class="btn tint" href="' + dirUrl(it.go.dir[0], it.go.dir[1]) + '" target="_blank" rel="noopener">Yol tarifi</a>' : "") + "</div>";
+    }
+    if (it.meeting) {
+      h += '<h3 class="sec-h">Toplantı saati</h3><div class="group"><label class="row" for="lo-input"><span class="row-t"><b>Saat (Londra)</b></span><input type="time" id="lo-input" value="' + esc(loTime) + '" step="300"></label></div>';
+      var mh = meetingHint();
+      h += '<div class="callout ' + (mh.cls === "bad" ? "bad" : "") + '" id="lo-callout">' + (alt === "1" || loTime ? esc(mh.txt) + "." : "") + "</div>";
+    }
+    if (it.go) {
+      h += '<h3 class="sec-h">' + esc(it.go.title || "Nasıl gidilir") + '</h3><div class="group go">';
+      if (it.go.lead) h += '<div class="row lead"><span class="ico">' + ICON.clock + '</span><span class="row-t"><b>' + esc(it.go.lead) + "</b></span></div>";
+      h += it.go.opts.map(function (o) { return '<div class="row"><span class="ico">' + ICON[o[0]] + '</span><span class="row-t"><b>' + esc(o[1]) + "</b></span></div>"; }).join("");
+      h += "</div>";
+      if (!it.place && it.go.dir) h += '<div class="actions one"><a class="btn tint" href="' + dirUrl(it.go.dir[0], it.go.dir[1]) + '" target="_blank" rel="noopener">Canlı yol tarifi</a></div>';
+    }
+    if (it.notes && it.notes.length) {
+      h += '<h3 class="sec-h">Notlar</h3><div class="group">' + it.notes.map(function (n) { return '<div class="row note">' + esc(n) + "</div>"; }).join("") + "</div>";
+    }
+    return h;
+  }
+  function openEvent(id) { openSheet(eventSheet(id)); }
+
+  function hotelSheet() {
+    return '<div class="sh-h"><h2 id="sh-title">Otel</h2><p>27 Kasım – ' + (alt === "1" ? "30 Kasım · 3 gece" : "1 Aralık · 4 gece") + "</p></div>" + placeBlock("hotel") +
+      '<div class="actions"><a class="btn fill" href="' + PLACES.hotel.map + '" target="_blank" rel="noopener">Haritada aç</a><a class="btn tint" href="' + dirUrl("heathrow", "hotel") + '" target="_blank" rel="noopener">Heathrow\'dan</a></div>' +
+      '<h3 class="sec-h">Bilgi</h3><div class="group"><div class="row note">Telefon: +44 20 7409 3131</div><div class="row note">En yakın metro: Hyde Park Corner (Piccadilly hattı)</div><div class="row note">Arkasında Hyde Park ve Winter Wonderland</div></div>';
+  }
+  function returnSheet() {
+    var r = RETURN[alt];
+    return '<div class="sh-h"><h2 id="sh-title">Dönüş</h2><p>Seçiminiz programı günceller.</p></div>' +
+      '<div class="segctl" role="group" aria-label="Dönüş seçeneği"><button type="button" data-alt="1" aria-pressed="' + (alt === "1") + '">30 Kas · 22:40</button><button type="button" data-alt="2" aria-pressed="' + (alt === "2") + '">1 Ara · 11:20</button></div>' +
+      '<div class="group" style="margin-top:16px">' + r.rows.map(function (x) { return '<div class="row kv"><span class="row-t">' + esc(x[0]) + '</span><span class="row-v">' + esc(x[1]) + "</span></div>"; }).join("") + "</div>" +
+      '<p class="foot">Varış saatleri tahminidir.</p>';
+  }
+  document.addEventListener("click", function (e) {
+    var s = e.target.closest("[data-sheet]");
+    if (s) { openSheet(s.dataset.sheet === "hotel" ? hotelSheet() : returnSheet()); return; }
+    var a = e.target.closest(".segctl [data-alt]");
+    if (a) { alt = a.dataset.alt; save("alt", alt); applyAlt(); openSheet(returnSheet()); return; }
+    var c = e.target.closest("[data-copy]");
+    if (c) {
+      var txt = c.dataset.copy;
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { toast("Adres kopyalandı"); }, function () { toast(txt); });
+      else toast(txt);
+    }
+  });
+  document.addEventListener("change", function (e) {
+    if (e.target.id !== "lo-input") return;
+    loTime = e.target.value; save("lo", loTime);
+    var mh = meetingHint(), co = document.getElementById("lo-callout");
+    co.className = "callout " + (mh.cls === "bad" ? "bad" : ""); co.textContent = (alt === "1" || loTime) ? mh.txt + "." : "";
+    renderDay(); tick();
+  });
+
+  var toastEl = document.getElementById("toast"), toastT;
+  function toast(m) { toastEl.textContent = m; toastEl.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove("on"); }, 1800); }
+
+  /* ================= Sekmeler ve adres ================= */
+  function setHash(name) { try { if (location.hash !== "#" + name) history.replaceState(null, "", "#" + name); } catch (e) {} }
+  function showView(v, opt) {
+    opt = opt || {};
+    curView = v;
+    document.querySelectorAll(".view[id^='v-']").forEach(function (s) { s.hidden = s.id !== "v-" + v; });
+    document.querySelectorAll(".tabbar [data-view]").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.view === v ? "true" : "false"); });
+    if (opt.scroll !== false) window.scrollTo(0, 0);
+    setHash(v === "program" ? curDay : v);
+  }
+  document.querySelector(".tabbar").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-view]"); if (!b) return;
+    if (b.dataset.view === curView) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    showView(b.dataset.view);
+  });
+  function route() {
+    var h = (location.hash || "").replace("#", "");
+    if (/^gun-/.test(h) && visibleDays().some(function (d) { return d.id === h; })) { curDay = h; renderWeek(); renderDay(); showView("program", { scroll: false }); return true; }
+    if (h === "harita" || h === "bilgi" || h === "liste") { showView(h, { scroll: false }); return true; }
+    return false;
+  }
+  window.addEventListener("hashchange", route);
+
+  /* ================= Saat ve sıradaki ================= */
   var GUN = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
   var AY = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-  function events() {
-    var e = [
-      { t: "2026-11-27T10:55:00Z", v: "İstanbul'dan kalkış", w: "13:55 İstanbul saati", id: "ev-depart" },
-      { t: "2026-11-27T15:05:00Z", v: "Londra'ya varış (tahmini)", w: "~15:05 Londra", id: "ev-arrive" },
-      { t: "2026-11-27T16:30:00Z", v: "Otele giriş", w: "InterContinental London Park Lane", id: "ev-hotel" },
-      { t: "2026-11-28T10:00:00Z", v: "Convene için otelden çıkış", w: "10:00 · etkinlik 11:00'de", id: "ev-convene" },
-      { t: "2026-11-28T11:00:00Z", v: "Etkinlik · Convene 155 Bishopsgate", w: "11:00 Londra", id: "ev-convene" },
-      { t: "2026-11-28T18:15:00Z", v: "Gala için otelden çıkış", w: "18:15 · gala 19:00'da", id: "ev-gala" },
-      { t: "2026-11-28T19:00:00Z", v: "Gala · Guildhall", w: "19:00 Londra", id: "ev-gala" },
-      { t: "2026-11-30T10:10:00Z", v: "HSBC için otelden çıkış", w: "10:10 · toplantı 11:00'de", id: "ev-hsbc" },
-      { t: "2026-11-30T11:00:00Z", v: "HSBC toplantısı · Canary Wharf", w: "11:00 Londra", id: "ev-hsbc" }
-    ];
-    if (loTime) e.push({ t: "2026-11-30T" + loTime + ":00Z", v: "İkinci toplantı · LetterOne", w: loTime + " Londra", id: "ev-letterone" });
-    if (alt === "1") {
-      e.push({ t: "2026-11-30T19:00:00Z", v: "Havalimanı için otelden çıkış", w: "19:00 · uçuş 22:40", id: "ev-return1" });
-      e.push({ t: "2026-11-30T22:40:00Z", v: "İstanbul'a dönüş", w: "22:40 Londra", id: "ev-return1" });
-    } else {
-      e.push({ t: "2026-12-01T07:45:00Z", v: "Havalimanı için otelden çıkış", w: "07:45 · uçuş 11:20", id: "ev-return2" });
-      e.push({ t: "2026-12-01T11:20:00Z", v: "İstanbul'a dönüş", w: "11:20 Londra", id: "ev-return2" });
-    }
-    return e.map(function (x) { x.d = new Date(x.t); return x; }).sort(function (a, b) { return a.d - b.d; });
+  function fmt(d, tz) { return new Intl.DateTimeFormat("tr-TR", { hour: "2-digit", minute: "2-digit", timeZone: tz }).format(d); }
+  function londonDate(d) { return new Intl.DateTimeFormat("en-CA", { year: "numeric", month: "2-digit", day: "2-digit", timeZone: "Europe/London" }).format(d); }
+  function upcoming() {
+    var list = [];
+    visibleDays().forEach(function (d) {
+      visibleItems(d).forEach(function (it) {
+        if (it.leaveUtc) list.push({ d: new Date(it.leaveUtc), it: it, day: d, leave: true });
+        var u = it.utc || (it.meeting && loTime ? d.date + "T" + loTime + ":00Z" : null);
+        if (u) list.push({ d: new Date(u), it: it, day: d });
+      });
+    });
+    return list.sort(function (a, b) { return a.d - b.d; });
   }
   function rel(ms) {
-    var m = Math.round(ms / 60000);
-    if (m < 1) return "şimdi";
-    var d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mm = m % 60;
-    if (d >= 1) return d + " gün " + h + " sa sonra";
-    if (h >= 1) return h + " sa " + mm + " dk sonra";
-    return mm + " dk sonra";
+    var m = Math.max(0, Math.round(ms / 60000)), dd = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mm = m % 60;
+    if (dd >= 1) return dd + " gün " + h + " sa";
+    if (h >= 1) return h + " sa " + mm + " dk";
+    return mm + " dk";
   }
-  var nextId = null;
   function tick() {
     var now = new Date();
-    document.getElementById("clk-ist").textContent = fmt(now, "Europe/Istanbul");
     document.getElementById("clk-lon").textContent = fmt(now, "Europe/London");
-    var ev = events(), nx = null;
-    for (var i = 0; i < ev.length; i++) { if (ev[i].d > now) { nx = ev[i]; break; } }
+    document.getElementById("clk-ist").textContent = fmt(now, "Europe/Istanbul");
+    var list = upcoming(), nx = null;
+    for (var i = 0; i < list.length; i++) if (list[i].d > now) { nx = list[i]; break; }
+    nextItem = nx;
     var k = document.getElementById("next-k"), v = document.getElementById("next-v"), s = document.getElementById("next-s");
-    if (!nx) { k.textContent = "Program"; v.textContent = "Tamamlandı. İyi yolculuklar!"; s.textContent = ""; }
-    else {
-      var ld = new Date(nx.d.getTime()); // Londra Kasım-Aralık'ta UTC
-      var day = GUN[ld.getUTCDay()] + " " + ld.getUTCDate() + " " + AY[ld.getUTCMonth()];
-      if (nx.id === "ev-depart") {
-        k.textContent = "Kalkışa kalan";
-        v.textContent = rel(nx.d - now).replace(" sonra", "");
-        s.textContent = day + " · 13:55 İstanbul saati";
-      } else {
-        k.textContent = "Sıradaki · " + rel(nx.d - now);
-        v.textContent = nx.v;
-        s.textContent = day + " · " + nx.w;
-      }
+    if (!nx) { k.textContent = "Program"; v.textContent = "Tamamlandı"; s.textContent = "İyi yolculuklar"; return; }
+    var dt = nx.d, dayTxt = GUN[dt.getUTCDay()] + ", " + dt.getUTCDate() + " " + AY[dt.getUTCMonth()];
+    var hm = pad(dt.getUTCHours()) + ":" + pad(dt.getUTCMinutes());
+    if (nx.it.id === "ev-depart") {
+      k.textContent = "Kalkışa"; v.textContent = rel(dt - now); s.textContent = "Cuma, 27 Kasım · 13:55 (İstanbul)";
+    } else if (nx.leave) {
+      k.textContent = "Sıradaki · " + rel(dt - now) + " sonra"; v.textContent = "Otelden çıkış"; s.textContent = dayTxt + " · " + hm + " · " + nx.it.t;
+    } else {
+      k.textContent = "Sıradaki · " + rel(dt - now) + " sonra"; v.textContent = nx.it.t; s.textContent = dayTxt + " · " + hm + " · " + nx.it.s;
     }
     var today = londonDate(now);
-    document.querySelectorAll(".day[data-date]").forEach(function (d) { d.classList.toggle("is-today", d.dataset.date === today); });
-    document.querySelectorAll(".tab[data-date]").forEach(function (a) { a.classList.toggle("is-today", a.dataset.date === today); });
-    nextId = nx ? nx.id : null;
+    document.querySelectorAll("#week [data-day]").forEach(function (b) { b.classList.toggle("today", dayById(b.dataset.day).date === today); });
   }
+  document.getElementById("next").addEventListener("click", function () {
+    if (!nextItem) return;
+    curDay = nextItem.day.id; renderWeek(); renderDay(); showView("program", { scroll: false });
+    openEvent(nextItem.it.id);
+  });
 
-  /* ---------- Şematik harita ---------- */
-  function drawMap() {
-    var svg = document.getElementById("map-svg"), NS = "http://www.w3.org/2000/svg";
-    var lonMin = -0.178, lonMax = 0.016, latMin = 51.477, latMax = 51.524, W = 1000;
-    var kx = (lonMax - lonMin) * 111.32 * Math.cos(51.5 * Math.PI / 180), ky = (latMax - latMin) * 111.2;
-    var H = Math.round(W * ky / kx);
+  /* ================= Harita ================= */
+  var MAP_PTS = [
+    { k: "hotel", n: 1, label: "Otel", dx: 34, dy: 40, a: "start", ev: "ev-hotel", sub: "27–30 Kasım" },
+    { k: "convene", n: 2, label: "Convene", dx: 34, dy: 10, a: "start", ev: "ev-convene", sub: "Cumartesi · 11:00" },
+    { k: "guildhall", n: 3, label: "Guildhall", dx: -34, dy: -14, a: "end", ev: "ev-gala", sub: "Cumartesi · 19:00" },
+    { k: "hsbc", n: 4, label: "HSBC", dx: 0, dy: -36, a: "middle", ev: "ev-hsbc", sub: "Pazartesi · 11:00" },
+    { k: "letterone", n: 5, label: "LetterOne", dx: 34, dy: -18, a: "start", ev: "ev-letterone", sub: "Pazartesi · ikinci toplantı" }
+  ];
+  function drawMap(svg, interactive) {
+    var NS = "http://www.w3.org/2000/svg";
+    var lonMin = -0.178, lonMax = 0.016, latMin = 51.478, latMax = 51.526, W = 1000;
+    var H = Math.round(W * ((latMax - latMin) * 111.2) / ((lonMax - lonMin) * 111.32 * Math.cos(51.5 * Math.PI / 180)));
     svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
     function X(lon) { return (lon - lonMin) / (lonMax - lonMin) * W; }
     function Y(lat) { return (latMax - lat) / (latMax - latMin) * H; }
-    function el(tag, attrs, txt) {
+    function el(tag, at, txt, parent) {
       var n = document.createElementNS(NS, tag);
-      for (var a in attrs) { if (a === "fill" || a === "stroke") n.style[a] = attrs[a]; else n.setAttribute(a, attrs[a]); }
-      if (txt) n.textContent = txt;
-      svg.appendChild(n); return n;
+      for (var a in at) { if (a === "fill" || a === "stroke") n.style[a] = at[a]; else n.setAttribute(a, at[a]); }
+      if (txt != null) n.textContent = txt;
+      (parent || svg).appendChild(n); return n;
     }
-    function c(name) { return "var(" + name + ")"; }
-
-    // Hyde Park (yaklaşık)
-    el("rect", { x: X(-0.178), y: Y(51.5112), width: X(-0.1525) - X(-0.178), height: Y(51.5028) - Y(51.5112), rx: 10, fill: c("--park") });
-    el("text", { x: 8, y: Y(51.5112) - 9, fill: c("--muted"), "font-size": 15, "font-family": "IBM Plex Sans, sans-serif" }, "Hyde Park");
-    // Green Park (yaklaşık)
-    el("polygon", { points: [[51.5069,-0.1478],[51.5050,-0.1395],[51.5023,-0.1420],[51.5030,-0.1478]].map(function(p){return X(p[1])+","+Y(p[0]);}).join(" "), fill: c("--park") });
-
-    // Thames (yaklaşık)
-    var river = [[51.4822,-0.178],[51.4823,-0.1665],[51.4846,-0.1497],[51.4880,-0.1271],[51.4945,-0.1236],[51.5008,-0.1219],[51.5065,-0.1203],[51.5087,-0.1167],[51.5097,-0.1040],[51.5088,-0.0943],[51.5079,-0.0877],[51.5055,-0.0754],[51.5035,-0.0600],[51.5045,-0.0480],[51.5078,-0.0360],[51.5040,-0.0285],[51.4960,-0.0262],[51.4885,-0.0215],[51.4848,-0.0110],[51.4870,-0.0010],[51.4950,0.0035],[51.5040,0.0050],[51.5095,0.0120],[51.5105,0.016]];
-    el("polyline", { points: river.map(function (p) { return X(p[1]) + "," + Y(p[0]); }).join(" "), fill: "none", stroke: c("--river"), "stroke-width": 16, "stroke-linejoin": "round", "stroke-linecap": "round" });
-    el("text", { x: X(-0.118), y: Y(51.4905), fill: c("--muted"), "font-size": 14, "font-style": "italic", "font-family": "IBM Plex Sans, sans-serif" }, "Thames");
-
-    // Heathrow yönü
-    el("text", { x: 10, y: H - 14, fill: c("--muted"), "font-size": 14, "font-family": "IBM Plex Mono, monospace" }, "← Heathrow ~22 km batı");
-
-    // Winter Wonderland
-    var ww = { lat: 51.5072, lon: -0.1600 };
-    el("circle", { cx: X(ww.lon), cy: Y(ww.lat), r: 6, fill: c("--brass") });
-    el("text", { x: 10, y: Y(ww.lat) + 14, fill: c("--brass"), "font-size": 14, "font-weight": 600, "font-family": "IBM Plex Sans, sans-serif" }, "Winter");
-    el("text", { x: 10, y: Y(ww.lat) + 30, fill: c("--brass"), "font-size": 14, "font-weight": 600, "font-family": "IBM Plex Sans, sans-serif" }, "Wonderland");
-
-    // Güzergâh çizgileri
-    function link(a, b, dash) {
-      el("line", { x1: X(P[a].lon), y1: Y(P[a].lat), x2: X(P[b].lon), y2: Y(P[b].lat), stroke: c("--muted"), "stroke-width": 2, "stroke-dasharray": dash || "6 6", opacity: .55 });
-    }
-
-    var pts = [
-      { k: "hotel", n: 1, label: "Otel", dx: 20, dy: 24, anchor: "start", target: "ev-hotel" },
-      { k: "convene", n: 2, label: "Convene", dx: 20, dy: -6, anchor: "start", target: "ev-convene" },
-      { k: "guildhall", n: 3, label: "Guildhall", dx: -18, dy: -16, anchor: "end", target: "ev-gala" },
-      { k: "hsbc", n: 4, label: "HSBC", dx: 0, dy: -24, anchor: "middle", target: "ev-hsbc" },
-      { k: "letterone", n: 5, label: "LetterOne", dx: 20, dy: -10, anchor: "start", target: "ev-letterone" }
-    ];
-    pts.forEach(function (p) {
-      var x = X(P[p.k].lon), y = Y(P[p.k].lat);
-      var g = document.createElementNS(NS, "a");
-      g.setAttribute("href", "#" + p.target); g.setAttribute("class", "mk"); g.setAttribute("aria-label", p.n + ". " + p.label + " programını aç");
-      g.addEventListener("click", function (e) { e.preventDefault(); openEvent(p.target); });
-      svg.appendChild(g);
-      var circ = document.createElementNS(NS, "circle");
-      circ.setAttribute("cx", x); circ.setAttribute("cy", y); circ.setAttribute("r", 15);
-      circ.style.fill = p.k === "hotel" ? c("--accent") : c("--ink"); circ.style.stroke = c("--surface"); circ.setAttribute("stroke-width", 3);
-      g.appendChild(circ);
-      var num = document.createElementNS(NS, "text");
-      num.setAttribute("x", x); num.setAttribute("y", y + 5); num.setAttribute("text-anchor", "middle");
-      num.style.fill = p.k === "hotel" ? c("--accent-ink") : c("--paper"); num.setAttribute("font-size", 14); num.setAttribute("font-weight", 600);
-      num.setAttribute("font-family", "IBM Plex Mono, monospace"); num.textContent = p.n;
-      g.appendChild(num);
-      var lab = document.createElementNS(NS, "text");
-      lab.setAttribute("x", x + p.dx); lab.setAttribute("y", y + p.dy); lab.setAttribute("text-anchor", p.anchor);
-      lab.style.fill = c("--ink"); lab.setAttribute("font-size", 19); lab.setAttribute("font-weight", 600);
-      lab.setAttribute("font-family", "IBM Plex Sans Condensed, sans-serif"); lab.textContent = p.label;
-      g.appendChild(lab);
+    var F = "-apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, 'Segoe UI', sans-serif";
+    el("rect", { x: 0, y: 0, width: W, height: H, fill: "var(--land)" });
+    el("rect", { x: -20, y: Y(51.5112), width: X(-0.1525) + 20, height: Y(51.5028) - Y(51.5112), rx: 16, fill: "var(--park)" });
+    el("text", { x: 14, y: Y(51.5112) + 34, fill: "var(--label2)", "font-size": 24, "font-family": F }, "Hyde Park");
+    var river = [[51.4822,-0.18],[51.4823,-0.1665],[51.4846,-0.1497],[51.4880,-0.1271],[51.4945,-0.1236],[51.5008,-0.1219],[51.5065,-0.1203],[51.5087,-0.1167],[51.5097,-0.1040],[51.5088,-0.0943],[51.5079,-0.0877],[51.5055,-0.0754],[51.5035,-0.0600],[51.5045,-0.0480],[51.5078,-0.0360],[51.5040,-0.0285],[51.4960,-0.0262],[51.4885,-0.0215],[51.4848,-0.0110],[51.4870,-0.0010],[51.4950,0.0035],[51.5040,0.0050],[51.5095,0.0120],[51.5105,0.02]];
+    el("polyline", { points: river.map(function (p) { return X(p[1]) + "," + Y(p[0]); }).join(" "), fill: "none", stroke: "var(--water)", "stroke-width": 20, "stroke-linejoin": "round", "stroke-linecap": "round" });
+    el("text", { x: X(-0.117), y: Y(51.4915), fill: "var(--label2)", "font-size": 22, "font-style": "italic", "font-family": F }, "Thames");
+    MAP_PTS.forEach(function (p) {
+      var x = X(PLACES[p.k].lon), y = Y(PLACES[p.k].lat);
+      var g = interactive ? el("a", { href: "#" + p.ev, "aria-label": p.n + ". " + p.label }) : el("g", {});
+      el("circle", { cx: x, cy: y, r: 26, fill: "var(--accent)", stroke: "var(--land)", "stroke-width": 4 }, null, g);
+      el("text", { x: x, y: y + 9, "text-anchor": "middle", fill: "#ffffff", "font-size": 26, "font-weight": 700, "font-family": F }, String(p.n), g);
+      el("text", { x: x + p.dx, y: y + p.dy, "text-anchor": p.a, fill: "var(--label)", "font-size": 34, "font-weight": 600, "font-family": F, stroke: "var(--land)", "stroke-width": 7, "paint-order": "stroke", "stroke-linejoin": "round" }, p.label, g);
+      if (interactive) g.addEventListener("click", function (e) { e.preventDefault(); openEvent(p.ev); });
     });
   }
+  document.getElementById("places").innerHTML = MAP_PTS.map(function (p) {
+    return '<button type="button" class="row" data-ev="' + p.ev + '"><span class="pin-n">' + p.n + '</span><span class="row-t"><b>' + esc(PLACES[p.k].name) + "</b><span>" + esc(p.sub) + "</span></span>" + CHEV + "</button>";
+  }).join("");
+  document.getElementById("places").addEventListener("click", function (e) { var b = e.target.closest("[data-ev]"); if (b) openEvent(b.dataset.ev); });
 
+  /* ================= Liste ================= */
+  document.getElementById("checklist").innerHTML = CHECKS.map(function (c, i) {
+    var id = "c" + (i + 1);
+    return '<label class="row chk" for="' + id + '"><input type="checkbox" id="' + id + '"' + (load("chk-" + id) === "1" ? " checked" : "") + '><span class="circ">' + ICON.check + '</span><span class="row-t">' + esc(c) + "</span></label>";
+  }).join("");
+  document.getElementById("checklist").addEventListener("change", function (e) { if (e.target.id) save("chk-" + e.target.id, e.target.checked ? "1" : "0"); });
 
-  /* ---------- Sekmeler ---------- */
-  var current = null;
-  function visibleTabs() {
-    return Array.prototype.filter.call(document.querySelectorAll(".chips .tab"), function (t) { return t.offsetParent !== null || t.getClientRects().length; });
-  }
-  function dayTabs() { return visibleTabs().filter(function (t) { return t.dataset.date; }); }
-  function scrollChipIntoView(t) {
-    var bar = t.parentNode, l = t.offsetLeft - bar.offsetLeft, r = l + t.offsetWidth;
-    if (l < bar.scrollLeft + 8) bar.scrollLeft = l - 16;
-    else if (r > bar.scrollLeft + bar.clientWidth - 8) bar.scrollLeft = r - bar.clientWidth + 16;
-  }
-  function showTab(name, opt) {
-    opt = opt || {};
-    var panel = document.getElementById("p-" + name), tab = document.getElementById("t-" + name);
-    if (!panel || !tab || !tab.getClientRects().length) { name = "gun-27"; panel = document.getElementById("p-gun-27"); tab = document.getElementById("t-gun-27"); }
-    current = name;
-    document.querySelectorAll(".tabpanel").forEach(function (p) { p.classList.toggle("is-active", p === panel); });
-    document.querySelectorAll(".chips .tab").forEach(function (t) {
-      var on = t === tab; t.setAttribute("aria-selected", on ? "true" : "false"); t.tabIndex = on ? 0 : -1;
+  /* ================= PDF / yazdırma belgesi ================= */
+  function buildPrint() {
+    var h = '<header class="p-head"><h1>Londra Programı</h1><p>İstanbul → Londra · 27 Kasım – 1 Aralık 2026</p></header>' +
+      '<div class="p-sum"><div><b>Gidiş</b><span>Cuma 27 Kasım, 13:55 (İstanbul)<br>Varış ~15:05 Londra saati</span></div>' +
+      '<div><b>Otel</b><span>InterContinental London Park Lane<br>+44 20 7409 3131</span></div>' +
+      '<div><b>Dönüş</b><span>1. seçenek: Pzt 30 Kasım, 22:40<br>2. seçenek: Sal 1 Aralık, 11:20</span></div></div>';
+    h += '<section class="p-sec"><h2>Dönüş seçenekleri</h2><table class="p-tbl"><thead><tr><th></th><th>1. seçenek</th><th>2. seçenek</th></tr></thead><tbody>' +
+      RETURN["1"].rows.map(function (r, i) { return "<tr><th>" + esc(r[0]) + "</th><td>" + esc(r[1]) + "</td><td>" + esc(RETURN["2"].rows[i][1]) + "</td></tr>"; }).join("") + "</tbody></table></section>";
+    h += '<section class="p-sec"><h2>Harita</h2><div class="p-map"><svg id="p-map"></svg></div></section>';
+    DAYS.forEach(function (d, di) {
+      h += '<section class="p-sec' + (di === 0 ? " p-break" : "") + '"><h2>' + esc(d.title) + "<small>" + esc(d.sub) + (d.alt ? " · yalnızca 2. seçenek" : "") + "</small></h2>";
+      d.items.forEach(function (it) {
+        var tm = itemTime(it);
+        h += '<div class="p-ev"><div class="tm">' + esc(it.word ? it.tm : (tm === "?" ? "—" : tm)) + (it.tzl ? "<small>" + esc(it.tzl) + "</small>" : "") + (it.meeting && !loTime ? "<small>saat teyit edilecek</small>" : "") + "</div><div>" +
+          '<span class="t">' + esc(it.t) + "</span>" + (it.alt && !d.alt ? '<span class="tag">' + it.alt + ". seçenek</span>" : "") +
+          '<div class="pl">' + (it.place ? esc(PLACES[it.place].name) + " · " + '<a href="' + PLACES[it.place].map + '">' + esc(PLACES[it.place].addr) + "</a>" : esc(it.s)) + "</div>";
+        if (it.go) h += '<div class="go">' + (it.go.lead ? "<b>" + esc(it.go.lead) + ".</b> " : (it.go.title ? "<b>" + esc(it.go.title) + ":</b> " : "")) + it.go.opts.map(function (o) { return esc(o[1]); }).join(" · ") +
+          (it.go.dir ? ' · <a href="' + dirUrl(it.go.dir[0], it.go.dir[1]) + '">Yol tarifi</a>' : "") + "</div>";
+        if (it.notes && it.notes.length) h += '<div class="nt">' + it.notes.map(esc).join(" ") + "</div>";
+        h += "</div></div>";
+      });
+      if (d.ideas) h += '<div class="p-ev"><div class="tm"><small>Öneriler</small></div><div class="nt">' + d.ideas.map(function (x) { return "<b>" + esc(x.t) + "</b> (" + esc(x.s) + ")"; }).join(" · ") + "</div></div>";
+      h += "</section>";
     });
-    scrollChipIntoView(tab);
-    if (opt.focus) tab.focus({ preventScroll: true });
-    if (opt.scroll !== false) {
-      var top = document.getElementById("tabs-top").getBoundingClientRect().top + window.scrollY;
-      if (window.scrollY > top) window.scrollTo({ top: top, behavior: "instant" });
-    }
-    save("tab", name);
-    if (opt.hash !== false) { try { if (location.hash !== "#" + name) history.replaceState(null, "", "#" + name); } catch (e) {} }
-  }
-  document.querySelectorAll(".chips .tab").forEach(function (t) {
-    t.addEventListener("click", function () { showTab(t.dataset.tab); });
-  });
-  document.querySelector(".chips").addEventListener("keydown", function (e) {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" && e.key !== "Home" && e.key !== "End") return;
-    var list = visibleTabs(), i = list.indexOf(document.activeElement); if (i < 0) return;
-    e.preventDefault();
-    var j = e.key === "ArrowRight" ? (i + 1) % list.length : e.key === "ArrowLeft" ? (i - 1 + list.length) % list.length : e.key === "Home" ? 0 : list.length - 1;
-    showTab(list[j].dataset.tab, { focus: true });
-  });
-  function openEvent(id) {
-    var ev = document.getElementById(id); if (!ev) return;
-    var panel = ev.closest(".tabpanel"); if (!panel) return;
-    showTab(panel.dataset.tab, { scroll: false });
-    requestAnimationFrame(function () {
-      var bar = document.querySelector(".chips").offsetHeight;
-      var y = ev.getBoundingClientRect().top + window.scrollY - bar - 12;
-      window.scrollTo({ top: Math.max(0, y), behavior: "auto" });
-      ev.classList.remove("flash"); void ev.offsetWidth; ev.classList.add("flash");
-    });
-  }
-  document.getElementById("next-btn").addEventListener("click", function () { if (nextId) openEvent(nextId); });
-
-  /* Gün altı: önceki / sonraki gün */
-  var GUN_AD = { "gun-27": "27 Kasım · Cuma", "gun-28": "28 Kasım · Cumartesi", "gun-29": "29 Kasım · Pazar", "gun-30": "30 Kasım · Pazartesi", "gun-01": "1 Aralık · Salı" };
-  function buildDayNav() {
-    var days = dayTabs().map(function (t) { return t.dataset.tab; });
-    document.querySelectorAll(".day.tabpanel[data-date]").forEach(function (p) {
-      var old = p.querySelector(".daynav"); if (old) old.remove();
-      var i = days.indexOf(p.dataset.tab); if (i < 0) return;
-      var nav = document.createElement("div"); nav.className = "daynav";
-      function mk(name, cls, lbl) {
-        var b = document.createElement("button"); b.type = "button"; b.className = cls;
-        b.innerHTML = "<small>" + lbl + "</small>" + GUN_AD[name];
-        b.addEventListener("click", function () { showTab(name); });
-        nav.appendChild(b);
-      }
-      if (i > 0) mk(days[i - 1], "pv", "← Önceki gün");
-      if (i < days.length - 1) mk(days[i + 1], "nx", "Sonraki gün →");
-      p.appendChild(nav);
-    });
+    h += '<section class="p-sec p-keep"><h2>Pratik bilgiler</h2><div class="p-grid">' +
+      [["Saat farkı", "Londra, İstanbul'un 3 saat gerisinde."], ["Hava", "Genellikle 4–11°C, sık yağmur; hava 16:00 civarında kararıyor."], ["Metro ve otobüs", "Temassız kart ya da telefonla girişte ve çıkışta okutun; günlük ücret tavanı otomatik."], ["Priz", "Tip G (üç köşeli); adaptör gerekir."], ["Ödeme", "Sterlin (GBP); temassız ödeme yaygın."], ["Acil durum", "999 · Otel +44 20 7409 3131"]]
+        .map(function (x) { return "<div><b>" + esc(x[0]) + "</b>" + esc(x[1]) + "</div>"; }).join("") + "</div></section>";
+    h += '<section class="p-sec p-keep"><h2>Yola çıkmadan</h2><ul class="p-check">' + CHECKS.map(function (c) { return "<li>" + esc(c) + "</li>"; }).join("") + "</ul></section>";
+    h += '<p class="p-foot">Yol süreleri ve varış saatleri tahminidir; yola çıkmadan “Yol tarifi” bağlantısıyla güncel süreyi kontrol edin. Kesin uçuş saatleri biletinizdedir.</p>';
+    document.getElementById("print-doc").innerHTML = h;
+    drawMap(document.getElementById("p-map"), false);
   }
 
-  drawMap();
-  setAlt(alt);
-  renderMeeting();
-  tick();
+  /* ================= Başlat ================= */
+  if (document.body.dataset.pdf === "1") document.getElementById("pdf-group").hidden = false;
+  drawMap(document.getElementById("map"), true);
+  (function startDay() {
+    var today = londonDate(new Date()), d = visibleDays().filter(function (x) { return x.date === today; })[0];
+    curDay = d ? d.id : "gun-27";
+  })();
+  applyAlt();
+  if (!route()) showView("program", { scroll: false });
+  buildPrint();
+  window.addEventListener("beforeprint", buildPrint);
   setInterval(tick, 30000);
-  /* Açılış sekmesi: adres çubuğundaki #gün, yoksa bugünün günü, yoksa 27 Kasım */
-  function startTab() {
-    var h = (location.hash || "").replace("#", "");
-    if (h && document.getElementById("p-" + h)) return h;
-    var today = londonDate(new Date()), t = document.querySelector('.tab[data-date="' + today + '"]');
-    if (t && t.getClientRects().length) return t.dataset.tab;
-    return "gun-27";
-  }
-  buildDayNav();
-  showTab(startTab(), { scroll: false, hash: false });
-  window.addEventListener("hashchange", function () {
-    var h = (location.hash || "").replace("#", "");
-    if (h && h !== current && document.getElementById("p-" + h)) showTab(h);
-  });
-
-
-  /* ---------- Kontrol listesi ---------- */
-  document.querySelectorAll("#checklist input").forEach(function (cb) {
-    cb.checked = load("chk-" + cb.id) === "1";
-    cb.addEventListener("change", function () { save("chk-" + cb.id, cb.checked ? "1" : "0"); });
-  });
 })();
 </script>
 </body>
